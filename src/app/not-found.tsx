@@ -1,7 +1,7 @@
 "use client";
 
 import Lottie from "react-lottie-player";
-import LottieAnimation from "/public/assets/lotties/not-found";
+import LottieAnimation from "../../public/assets/lotties/not-found.json";
 
 export default function NotFound() {
     return (

@@ -3,17 +3,8 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navList = [
-    {
-        name: "Posts",
-        href: "/blog",
-    },
-    {
-        name: "About",
-        href: "/about",
-    },
-];
+import { navList } from "@/lib/const";
+import GithubIcon from "@/components/icons/GithubIcon";
 
 export default function Header() {
     const pathname = usePathname();
@@ -36,6 +27,15 @@ export default function Header() {
                             {nav.name}
                         </Link>
                     ))}
+                </div>
+                <div className="flex justify-center gap-4">
+                    <Link href="https://github.com/swhana" target="_blank">
+                        <GithubIcon
+                            className="fill-foreground transition hover:fill-pink-600"
+                            width={30}
+                            height={30}
+                        />
+                    </Link>
                 </div>
             </div>
         </nav>
