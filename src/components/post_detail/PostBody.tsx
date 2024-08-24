@@ -25,8 +25,8 @@ export default function PostBody({ post }: PostProp) {
                             rehypePrettyCode,
                             {
                                 theme: {
-                                    dark: "github-dark-dimmed",
-                                    light: "github-light",
+                                    dark: "github-light",
+                                    light: "github-dark",
                                 },
                             },
                         ],
