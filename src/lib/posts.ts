@@ -12,7 +12,7 @@ const BASE_PATH = "src\\posts\\blog"; // 실제 포스트 mdx 파일이 위치�
 const POST_PATH = path.join(process.cwd(), BASE_PATH); // Node.js의 path모듈로 상대 경로를 절대 경로로 바꿈
 
 // category folder name => public name
-export const getCategoryPublicName = (dirPath: string) =>
+export const getCategoryName = (dirPath: string) =>
     dirPath
         .split("_")
         .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
@@ -40,9 +40,8 @@ export const parsePostAbstract = (postPath: string) => {
         .replace(".mdx", "");
 
     const [categoryPath, slug] = filePath.split("\\"); // blog/[categoryPath]/[slug]
-    console.log(categoryPath, slug);
-    const url = `/blog/posts/${categoryPath}/${slug}`; //썸네일 url
-    const categoryName = getCategoryPublicName(categoryPath);
+    const url = `/blog/posts/${categoryPath}/${slug}`; // a href = "썸네일 url"
+    const categoryName = getCategoryName(categoryPath);
     return { url, categoryPath, categoryName, slug };
 };
 
