@@ -40,15 +40,16 @@ export const parsePostAbstract = (postPath: string) => {
         .replace(".mdx", "");
 
     const [categoryPath, slug] = filePath.split("\\"); // blog/[categoryPath]/[slug]
-    const url = `/blog/${categoryPath}/${slug}`;
+    console.log(categoryPath, slug);
+    const url = `/blog/posts/${categoryPath}/${slug}`; //썸네일 url
     const categoryName = getCategoryPublicName(categoryPath);
     return { url, categoryPath, categoryName, slug };
 };
 
 // 전체 post 파싱
 const parsePost = async (postPath: string): Promise<Post> => {
-    const postAbstract = parsePostAbstract(postPath);
-    const postDetail = await parsePostDetail(postPath);
+    const postAbstract = parsePostAbstract(postPath); //개요 파싱
+    const postDetail = await parsePostDetail(postPath); //상세내용 파싱
 
     return { ...postAbstract, ...postDetail };
 };
