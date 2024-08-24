@@ -40,7 +40,7 @@ export const parsePostAbstract = (postPath: string) => {
         .replace(".mdx", "");
 
     const [categoryPath, slug] = filePath.split("\\"); // blog/[categoryPath]/[slug]
-    const url = `/blog/posts/${categoryPath}/${slug}`; // a href = "썸네일 url"
+    const url = `/blog/${categoryPath}/${slug}`; // 글 상세 페이지 들어갈 때 링크용
     const categoryName = getCategoryName(categoryPath);
     return { url, categoryPath, categoryName, slug };
 };

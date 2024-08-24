@@ -17,7 +17,6 @@ const navList = [
 
 export default function Header() {
     const pathname = usePathname();
-    console.log(pathname?.startsWith("/blog"));
 
     return (
         <nav className="w-full z-40 flex flex-col justify-center items-center border-b bg-background shadow-sm print:hidden">
