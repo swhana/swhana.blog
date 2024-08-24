@@ -73,6 +73,13 @@ export const getPostList = async (category?: string): Promise<Post[]> => {
     return postList;
 };
 
+// 모든 포스트 목록 정렬
+export const getSortedPostList = async (category?: string): Promise<Post[]> => {
+    const postList = await getPostList(category);
+
+    return postList.sort((a, b) => (a.date < b.date ? 1 : -1));
+};
+
 // 포스트 상세 내용 조회
 export const getPostDetail = async (category: string, slug: string) => {
     const filePath = `${POST_PATH}/${category}/${slug}/content.mdx`; // app 디렉토리 안에 파일경로

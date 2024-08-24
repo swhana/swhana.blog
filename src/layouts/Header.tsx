@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navList } from "@/lib/const";
+import { navList } from "@/config/const";
 import GithubIcon from "@/components/icons/GithubIcon";
 
 export default function Header() {
