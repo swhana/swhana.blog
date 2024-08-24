@@ -42,6 +42,8 @@ export const parsePostAbstract = (postPath: string) => {
     const [categoryPath, slug] = filePath.split("\\"); // blog/[categoryPath]/[slug]
     const url = `/blog/${categoryPath}/${slug}`; // 글 상세 페이지 들어갈 때 링크용
     const categoryName = getCategoryName(categoryPath);
+    // console.log(categoryPath);
+
     return { url, categoryPath, categoryName, slug };
 };
 
@@ -82,7 +84,7 @@ export const getSortedPostList = async (category?: string): Promise<Post[]> => {
 
 // 포스트 상세 내용 조회
 export const getPostDetail = async (category: string, slug: string) => {
-    const filePath = `${POST_PATH}/${category}/${slug}/content.mdx`; // app 디렉토리 안에 파일경로
+    const filePath = `${POST_PATH}\\${category}\\${slug}\\content.mdx`; // app 디렉토리 안에 파일경로
     const postDetail = await parsePost(filePath);
     return postDetail;
 };
