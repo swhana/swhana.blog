@@ -118,3 +118,29 @@ export const getCategoryList = async () => {
 
     return detailList;
 };
+
+export const parseToc = (content: string) => {
+    //markdown에서 ##(h2: 제목)이나 ###(h3: 소제목)으로 시작하는 문서 찾기
+    const regex = /^(##|###) (.*$)/gim;
+    const targetList = content.match(regex);
+
+    return (
+        targetList?.map((target) => ({
+            text: target.replace("##", "").replace("#", ""), //##, ### 붙은 제목을 전부 텍스트화함
+
+            //"## Sample Target?" -> "#sample-target"
+            link:
+                "#" +
+                target
+                    .replace("# ", "")
+                    .replace("#", "")
+                    .replace(/[\[\]:!@#$/%^&*()+=,.]/g, "")
+                    .replace(/ /g, "-")
+                    .toLowerCase()
+                    .replace("?", ""),
+
+            //##의 경우 들여쓰기 0, ###의 경우 들여쓰기 1
+            indent: (target.match(/#/g)?.length || 2) - 2,
+        })) || []
+    );
+};

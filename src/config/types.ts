@@ -21,7 +21,7 @@ export interface CategoryDetail {
     count: number;
 }
 
-export interface HeadingItem {
+export interface TableItem {
     text: string;
     link: string;
     indent: number;
