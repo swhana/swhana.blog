@@ -1,5 +1,8 @@
 "use client";
-// All(17) Nextjs(1) Git(3) 이런식으로
+/**
+ * 현재로썬 카테고리 부분 / 포스트 부분 모두 CSR이어서 상태 공유를 편하게 하기 위해 통합했음
+ * 나중에 Sidebar 만들고 Grid-List 전환 버튼을 Sidebar로 옮기게 되면 다시 컴포넌트 분리할 수도 있음
+ */
 
 import { CategoryDetail, Post } from "@/config/types";
 import { useRouter } from "next/navigation";

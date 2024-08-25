@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { navList } from "@/config/const";
 import GithubIcon from "@/components/icons/GithubIcon";
 import ThemeBtn from "@/components/theme/ThemeBtn";
+import { Mail } from "lucide-react";
 
 export default function Header() {
     const pathname = usePathname();
@@ -31,11 +32,14 @@ export default function Header() {
                 </div>
                 <div className="flex justify-center items-center gap-4">
                     <ThemeBtn />
+                    <Link href="mailto:swhan0428@gmail.com" target="_blank">
+                        <Mail />
+                    </Link>
                     <Link href="https://github.com/swhana" target="_blank">
                         <GithubIcon
-                            className="fill-foreground transition hover:fill-pink-600"
-                            width={30}
-                            height={30}
+                            className="fill-current hover:stroke-slate-700 dark:fill-white"
+                            width={24}
+                            height={24}
                         />
                     </Link>
                 </div>
