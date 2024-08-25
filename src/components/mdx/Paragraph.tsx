@@ -1,5 +1,20 @@
-export const Paragraph = ({ children }) => {
-    //추후에 children에 img태그가 있는지 여부로 div나 p를 리턴하는 식으로 해도 괜찮을듯함
+import React from "react";
+import { MdxImage } from "./Image";
 
-    return <div>{children}</div>;
+export const Paragraph = ({ children }) => {
+    // 자식 요소가 <MdxImage/>를 포함하고 있는지 확인함
+    // 포함하고 있으면 <div>, 아니면 <p>태그로 감싸서 리턴
+    const containsImg = (children) => {
+        let ret = false;
+
+        React.Children.forEach(children, (child) => {
+            if (React.isValidElement(child) && child.type === MdxImage) {
+                return (ret = true);
+            }
+        });
+
+        return ret;
+    };
+
+    return containsImg(children) ? <div>{children}</div> : <p>{children}</p>;
 };
