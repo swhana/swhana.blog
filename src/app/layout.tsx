@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/config/globals.css";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 export const metadata: Metadata = {
     title: "swhana's blog",
@@ -15,13 +16,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning={true}>
+        <html lang="en" suppressHydrationWarning>
             <body>
-                <Header />
-                <main className="mt-[64px] flex flex-1 flex-col">
-                    {children}
-                </main>
-                <Footer />
+                <ThemeProvider>
+                    <Header />
+                    <main className="mt-[64px] flex flex-1 flex-col">
+                        {children}
+                    </main>
+                    <Footer />
+                </ThemeProvider>
             </body>
         </html>
     );

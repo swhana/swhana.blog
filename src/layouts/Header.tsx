@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navList } from "@/config/const";
 import GithubIcon from "@/components/icons/GithubIcon";
+import ThemeBtn from "@/components/theme/ThemeBtn";
 
 export default function Header() {
     const pathname = usePathname();
@@ -28,7 +29,8 @@ export default function Header() {
                         </Link>
                     ))}
                 </div>
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-center items-center gap-4">
+                    <ThemeBtn />
                     <Link href="https://github.com/swhana" target="_blank">
                         <GithubIcon
                             className="fill-foreground transition hover:fill-pink-600"
