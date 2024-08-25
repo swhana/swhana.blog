@@ -18,6 +18,7 @@ export default function CategoryList({
 }: CategoryListProps) {
     const router = useRouter();
 
+    //Select형 Button으로 구현할 때 사용
     const onCategoryChange = (category: string) => {
         if (category === "All") router.push("/blog");
         else router.push(`/blog/${category}`);
