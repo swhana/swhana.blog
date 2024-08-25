@@ -1,5 +1,5 @@
 import { Post } from "@/config/types";
-import PostCard from "./PostCard";
+import PostCard from "./PostGridCard";
 
 interface PostListProps {
     list: Post[];

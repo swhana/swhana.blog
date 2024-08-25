@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
-import PostGridList from "../post_gridlist/PostGridList";
+
 import PostList from "./PostList";
 import GridBtn from "../theme/GridBtn";
+import PostGridList from "./PostGridList";
 
 export default function ToggleGridList({ list }) {
     const [isGrid, setIsGrid] = useState(false);
