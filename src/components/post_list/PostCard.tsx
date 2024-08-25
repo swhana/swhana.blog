@@ -13,9 +13,11 @@ export default function PostCard({ post }: PostCardProps) {
 
     return (
         <Link href={post.url}>
-            <li className="w-full flex flex-row justify-between gap-3 overflow-hidden rounded-md transition">
+            <li className="w-full flex flex-row justify-between gap-3 overflow-hidden rounded-md transition group">
                 <div className="max-w-[500px]">
-                    <p className="text-lg font-semibold mt-2">{post.title}</p>
+                    <p className="text-lg font-semibold mt-2 group-hover:text-blue-500">
+                        {post.title}
+                    </p>
                     <p className="text-sm font-light text-stone-500 truncate-2">
                         {desc}
                     </p>
