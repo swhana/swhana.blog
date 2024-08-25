@@ -21,7 +21,7 @@ export default async function PostListPage({ category }: PostListProps) {
     const allPostCount = await getAllPostCount();
 
     return (
-        <section className="mx-auto mt-12 w-full max-w-[850px] px-4">
+        <section className="mx-auto mt-12 w-full max-w-[750px] px-4">
             <CategoryList
                 categoryList={categoryList}
                 allPostCount={allPostCount}
