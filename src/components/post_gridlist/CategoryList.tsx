@@ -25,7 +25,7 @@ export default function CategoryList({
     };
 
     return (
-        <section className="mb-10 hidden sm:block">
+        <section className="hidden sm:block">
             <ul className="flex gap-3">
                 <CategoryBtn
                     key={"All"}

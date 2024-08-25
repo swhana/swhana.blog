@@ -1,7 +1,6 @@
-// 전체 포스트 리스트에서 하나하나 포스트 요약을 담당할 카드
+//리스트형 포스트카드
 
 import { Post } from "@/config/types";
-import { CalendarDays, Clock3 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,40 +11,25 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
     return (
         <Link href={post.url}>
-            <li className="flex h-full flex-col gap-3 overflow-hidden rounded-md border shadow-md transition hover:shadow-xl dark:border-slate-700 dark:hover:border-white">
-                <div className="relative aspect-video w-full rounded-t-md border-b">
+            <li className="w-full flex flex-row justify-between gap-3 overflow-hidden rounded-md transition">
+                <div>
+                    <p className="text-lg font-semibold mt-2">{post.title}</p>
+                    <p className="text-sm font-normal">{post.description}</p>
+                    <p className="text-xs font-extralight mt-4 mb-1">
+                        {post.dateString}
+                    </p>
+                </div>
+                <div>
                     <Image
                         src={post.thumbnail}
                         alt={post.title}
-                        sizes="(max-width: 1000px) 50vw, 450px"
-                        fill
+                        width={100}
+                        height={100}
                         priority
                         style={{
                             objectFit: "cover",
                         }}
                     />
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-4 pt-1">
-                    <div>
-                        <div className="text-sm font-medium text-blue-500 lg:text-base">
-                            {post.categoryName}
-                        </div>
-                        <h2 className="mb-3 mt-1 text-lg font-bold sm:text-xl md:text-lg">
-                            {post.title}
-                        </h2>
-                    </div>
-                    <div className="flex justify-between gap-3 text-sm text-gray-500 dark:text-gray-400">
-                        <div className="flex items-center gap-1">
-                            <CalendarDays className="w-3.5" />
-                            <span className="text-sm">{post.dateString}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <Clock3 className="w-3.5" />
-                            <span className="text-sm">
-                                {post.readingMinutes}분
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </li>
         </Link>

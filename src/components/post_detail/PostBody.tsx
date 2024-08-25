@@ -1,3 +1,5 @@
+//여기만큼은 무슨일이 있어도 Server-side Component로 사수한다
+
 import { Post } from "@/config/types";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { MdxComponent } from "../mdx";
