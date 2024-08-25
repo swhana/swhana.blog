@@ -3,7 +3,7 @@ export interface PostMatter {
     date: Date; // 작성날짜
     dateString: string; // 날짜 string
     thumbnail: string; // 썸네일 주소
-    desciption: string; //description
+    description: string; //description
 }
 
 export interface Post extends PostMatter {
