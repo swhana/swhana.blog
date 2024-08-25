@@ -20,7 +20,7 @@ export default function RootLayout({
             <body>
                 <ThemeProvider>
                     <Header />
-                    <main className="mt-[64px] flex flex-1 flex-col">
+                    <main className="mt-[64px] flex flex-1 flex-col min-h-[70vh]">
                         {children}
                     </main>
                     <Footer />
