@@ -23,6 +23,7 @@ export default function ThemeBtn() {
                 }
             />
             <Button
+                className="hover:bg-transparent"
                 variant="ghost"
                 size="icon"
                 onClick={() =>
