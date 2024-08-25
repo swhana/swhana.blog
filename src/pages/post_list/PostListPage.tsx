@@ -1,10 +1,7 @@
 // 전체 포스트 썸네일 보여주는 개요 페이지
 
-import CategoryList from "@/components/post_gridlist/CategoryList";
-import PostGridList from "@/components/post_gridlist/PostGridList";
-import PostList from "@/components/post_list/PostList";
+import CategoryList from "@/components/post_list/CategoryList";
 import ToggleGridList from "@/components/post_list/ToggleList";
-import GridBtn from "@/components/theme/GridBtn";
 
 import {
     getAllPostCount,
