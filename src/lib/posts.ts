@@ -1,5 +1,5 @@
 // 블로그 포스트 작성
-import { Post, PostMatter } from "@/config/types";
+import { CategoryDetail, Post, PostMatter } from "@/config/types";
 import path from "path";
 import fs from "fs";
 import readingTime from "reading-time";
@@ -87,4 +87,34 @@ export const getPostDetail = async (category: string, slug: string) => {
     const filePath = `${POST_PATH}\\${category}\\${slug}\\content.mdx`; // app 디렉토리 안에 파일경로
     const postDetail = await parsePost(filePath);
     return postDetail;
+};
+
+export const getAllPostCount = async () => (await getPostList()).length;
+
+// 카테고리 전부
+export const getCategoryList = async () => {
+    //모든 글 탐색
+    const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
+
+    const postListByCategory = postPaths.map(
+        (path) => path.replace(`${BASE_PATH}\\`, "").split("\\")[0],
+    );
+
+    const result: { [key: string]: number } = {};
+    for (const category of postListByCategory) {
+        if (result[category]) {
+            result[category] += 1;
+        } else {
+            result[category] = 1;
+        }
+    }
+    const detailList: CategoryDetail[] = Object.entries(result).map(
+        ([category, count]) => ({
+            dirName: category,
+            publicName: getCategoryName(category),
+            count,
+        }),
+    );
+
+    return detailList;
 };

@@ -14,7 +14,7 @@ const config = {
         },
         extend: {
             fontFamily: {
-                pretendard: ["Pretendard"],
+                pretendard: ["Pretendard Variable"],
             },
             colors: {
                 border: "hsl(var(--border))",
@@ -65,6 +65,10 @@ const config = {
                         "h2, h3, h4": {
                             scrollMarginTop: "5rem",
                         },
+                        div: {
+                            fontSize: "16px",
+                        },
+
                         p: {
                             marginTop: "2rem",
                             marginBottom: "2rem",
@@ -83,7 +87,7 @@ const config = {
                             position: "relative",
                             bottom: 1,
                             margin: "0 3px",
-                            color: "#eb5757",
+                            color: "#63b3ed",
                             backgroundColor: "rgba(135,131,120,0.15)",
                             fontFamily:
                                 '"SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace',

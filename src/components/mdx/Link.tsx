@@ -9,7 +9,7 @@ export const ExternalLink = ({
         <a
             href={href.toString() || ""}
             target="_blank"
-            className="break-words text-pink-600 no-underline underline-offset-4 hover:underline"
+            className="break-words text-blue-400 no-underline underline-offset-4 hover:font-semibold"
             {...props}
         >
             {children}
