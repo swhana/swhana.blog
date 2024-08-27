@@ -33,11 +33,11 @@ export default function Header() {
                 <div className="flex justify-center items-center gap-4">
                     <ThemeBtn />
                     <Link href="mailto:swhan0428@gmail.com" target="_blank">
-                        <Mail />
+                        <Mail className="hover:stroke-blue-500" />
                     </Link>
                     <Link href="https://github.com/swhana" target="_blank">
                         <GithubIcon
-                            className="fill-current hover:stroke-slate-700 dark:fill-white"
+                            className="fill-current hover:fill-blue-500 dark:fill-white"
                             width={24}
                             height={24}
                         />
