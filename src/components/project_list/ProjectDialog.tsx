@@ -15,7 +15,7 @@ export default function ProjectDialog({ project }: ProjectCardProps) {
             <DialogTrigger className="text-start">
                 <ProjectCard project={project} />
             </DialogTrigger>
-            <DialogContent className="max-w-[500px] gap-0 px-0 pb-3">
+            <DialogContent className="max-w-[500px] gap-0 px-0 pb-6">
                 <ProjectDetail project={project} />
             </DialogContent>
         </Dialog>

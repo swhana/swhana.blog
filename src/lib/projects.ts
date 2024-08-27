@@ -18,7 +18,10 @@ const parseProject = async (projectPath: string) => {
     const { data, content } = matter(file);
     const grayMatter = data as ProjectMatter;
     const startDate = format(data.startDate, "yyyy년 M월");
-    const endDate = format(data.endDate, "yyyy년 M월");
+    const endDate =
+        data.endDate instanceof Date
+            ? format(data.endDate, "yyyy년 M월")
+            : data.endDate;
     const techstacks = data.techstacks.split(", ");
 
     //project name에 해당하는 부분

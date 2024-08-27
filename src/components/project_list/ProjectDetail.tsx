@@ -9,13 +9,7 @@ import { Project } from "@/config/types";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LinkIcon } from "lucide-react";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Image from "next/image";
 import { getProjectImgs } from "@/lib/projects";
 
@@ -39,7 +33,7 @@ export default async function ProjectDetail({ project }: ProjectCardProps) {
                         {project.startDate} - {project.endDate}
                     </div>
                 </Link>
-                <ul className="flex flex-row gap-1 m-4 flex-wrap">
+                <ul className="flex flex-row gap-1 m-4 flex-wrap justify-center">
                     {project.techstacks.map((stack, i) => (
                         <li
                             key={i}
