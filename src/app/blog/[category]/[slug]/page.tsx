@@ -1,6 +1,7 @@
 //블로그 포스트 상세 페이지
 //여기만큼은 무슨일이 있어도 Server-side Component로 사수한다
 
+import Comments from "@/components/comments/Comments";
 import PostBody from "@/components/post_detail/PostBody";
 import PostHeader from "@/components/post_detail/PostHeader";
 import Sidebar from "@/components/post_detail/ToC_Sidebar";
@@ -22,6 +23,7 @@ export default async function PostDetailPage({
             <article className="relative">
                 <Sidebar contents={toc} />
                 <PostBody post={post} />
+                <Comments />
             </article>
         </div>
     );
