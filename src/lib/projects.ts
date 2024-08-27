@@ -19,6 +19,7 @@ const parseProject = async (projectPath: string) => {
     const grayMatter = data as ProjectMatter;
     const startDate = format(data.startDate, "yyyy년 M월");
     const endDate = format(data.endDate, "yyyy년 M월");
+    const techstacks = data.techstacks.split(", ");
 
     //project name에 해당하는 부분
     const slug = projectPath
@@ -28,6 +29,7 @@ const parseProject = async (projectPath: string) => {
 
     return {
         ...grayMatter,
+        techstacks,
         content,
         startDate,
         endDate,
@@ -51,4 +53,12 @@ export const getSortedProjectList = async () => {
     const projectList = await getProjectList();
 
     return projectList.sort((a, b) => (a.startDate < b.startDate ? 1 : -1));
+};
+
+export const getProjectImgs = async (project: Project): Promise<string[]> => {
+    const imgsDir = path.join(process.cwd(), `public/${project.imgPath}`);
+    const imgFiles = fs.readdirSync(imgsDir);
+    const imgPaths = imgFiles.map((file) => `${project.imgPath}/${file}`);
+
+    return imgPaths;
 };

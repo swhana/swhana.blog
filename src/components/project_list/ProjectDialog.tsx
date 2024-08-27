@@ -1,16 +1,6 @@
-"use client";
-
 import { Project } from "@/config/types";
-import Image from "next/image";
-import Link from "next/link";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "../ui/dialog";
+
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
 import ProjectCard from "./ProjectCard";
 import ProjectDetail from "./ProjectDetail";
@@ -25,7 +15,7 @@ export default function ProjectDialog({ project }: ProjectCardProps) {
             <DialogTrigger className="text-start">
                 <ProjectCard project={project} />
             </DialogTrigger>
-            <DialogContent className="gap-0 px-0 pb-3">
+            <DialogContent className="max-w-[500px] gap-0 px-0 pb-3">
                 <ProjectDetail project={project} />
             </DialogContent>
         </Dialog>

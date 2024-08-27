@@ -40,6 +40,7 @@ export interface ProjectMatter {
 
 //프로젝트 상세 내용에 쓰일 타입
 export interface Project extends ProjectMatter {
+    imgPath?: string; //이미지 저장되는 주소
     slug: string;
     content: string; //사실 markdown 내용은 전부 content안에 들어갈 예정
 }
