@@ -35,7 +35,7 @@ export default function TotalPostList({
     };
 
     return (
-        <section className="hidden sm:block">
+        <section className="sm:block">
             <div className="flex justify-between mb-10">
                 <ul className="flex gap-3">
                     <CategoryBtn

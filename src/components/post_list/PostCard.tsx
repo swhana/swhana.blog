@@ -13,7 +13,7 @@ export default function PostCard({ post }: PostCardProps) {
 
     return (
         <Link href={post.url}>
-            <li className="w-full flex flex-row justify-between gap-3 overflow-hidden rounded-md transition group">
+            <li className="w-full flex flex-row justify-between gap-2 overflow-hidden rounded-md transition group max-h-[120px] sm:max-h-[100px]">
                 <div className="max-w-[500px]">
                     <p className="text-lg font-semibold mt-2 group-hover:text-blue-500">
                         {post.title}
@@ -30,9 +30,10 @@ export default function PostCard({ post }: PostCardProps) {
                     alt={post.title}
                     width={100}
                     height={100}
-                    priority
                     style={{
                         objectFit: "cover",
+                        borderRadius: 8,
+                        backgroundColor: "#FFF", //배경 투명한 파일 대비
                     }}
                 />
             </li>
