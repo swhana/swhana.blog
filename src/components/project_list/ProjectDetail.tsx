@@ -45,30 +45,34 @@ export default async function ProjectDetail({ project }: ProjectCardProps) {
                 </ul>
             </div>
             <div className="max-h-[50vh] sm:max-h-[70vh] overflow-y-scroll scroll-smooth">
-                <Carousel
-                    className="m-6"
-                    opts={{
-                        loop: true,
-                    }}
-                >
-                    <CarouselContent>
-                        {imgPaths.map((img, i) => (
-                            <CarouselItem
-                                key={i}
-                                className="aspect-video items-center justify-center h-[240px]"
-                            >
-                                <Image
-                                    src={img}
-                                    alt={img + i}
-                                    width={480}
-                                    height={320}
-                                    priority
-                                    unoptimized
-                                />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                </Carousel>
+                {imgPaths.length !== 0 ? (
+                    <Carousel
+                        className="m-6"
+                        opts={{
+                            loop: true,
+                        }}
+                    >
+                        <CarouselContent>
+                            {imgPaths.map((img, i) => (
+                                <CarouselItem
+                                    key={i}
+                                    className="aspect-video items-center justify-center h-[240px]"
+                                >
+                                    <Image
+                                        src={img}
+                                        alt={img + i}
+                                        width={480}
+                                        height={320}
+                                        priority
+                                        unoptimized
+                                    />
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    </Carousel>
+                ) : (
+                    <></>
+                )}
 
                 <div className="prose project px-8 dark:prose-invert mt-8">
                     <MDXRemote

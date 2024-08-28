@@ -1,20 +1,37 @@
 ---
-title: "Github에 기존 프로젝트 업로드 하는 방법"
+title: "Github에 로컬 프로젝트 업로드 하는 방법"
 date: 2024-08-24
-description: 나중에 내가 쓰려고 올림
+description: 로컬 프로젝트를 Github에 올리기 위한 명령어
 thumbnail: /blog/posts/git/upload_repo/thumbnail.png
 ---
 
 ```
     git init
     git branch -M main
+```
+**git init** git을 초기화하고(.git폴더 생성)
+**git branch -M main** master로 되어있는 메인 브랜치를 main으로 바꿔준다.(원격 저장소의 메인 브랜치가 master면 필요없음)
 
-    git remote add origin 내 주소
-    git remove -v
 
+```
+    git remote add origin [내 주소]
+    git remote -v
+```
+**git remote add origin [내 주소]** 자신이 업로드할 Github의 원격 저장소(레포지토리) 주소를 추가한다.
+**git remote -v** 잘 등록이 되었는지 확인하기 위한 명령어
+
+
+```
     git pull origin main
+```
+**git pull origin main** 혹시나 원격 저장소에 파일이 있거나 하면 동기화를 위해 한번 실행해준다.(README.md 등)
+
+```
     git add .
-    git commit -m "initial commit"
+    git commit -m [커밋 메시지]
     git push origin main
 
 ```
+**git add .** 로컬 파일을 전부 업로드한다
+**git commit -m [커밋 메시지]** 커밋 메시지를 작성한다.
+**git push origin main** main 브랜치로 푸시한다. 위에서 master로 했으면 main 대신 master

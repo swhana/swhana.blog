@@ -25,18 +25,16 @@ export default function PostCard({ post }: PostCardProps) {
                         {post.dateString}
                     </p>
                 </div>
-                <div>
-                    <Image
-                        src={post.thumbnail}
-                        alt={post.title}
-                        width={100}
-                        height={100}
-                        priority
-                        style={{
-                            objectFit: "cover",
-                        }}
-                    />
-                </div>
+                <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    width={100}
+                    height={100}
+                    priority
+                    style={{
+                        objectFit: "cover",
+                    }}
+                />
             </li>
         </Link>
     );

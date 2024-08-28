@@ -59,6 +59,7 @@ export const getSortedProjectList = async () => {
 };
 
 export const getProjectImgs = async (project: Project): Promise<string[]> => {
+    if (project.imgPath === "") return [];
     const imgsDir = path.join(process.cwd(), `public/${project.imgPath}`);
     const imgFiles = fs.readdirSync(imgsDir);
     const imgPaths = imgFiles.map((file) => `${project.imgPath}/${file}`);
