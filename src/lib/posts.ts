@@ -92,7 +92,7 @@ export const getPostDetail = async (category: string, slug: string) => {
 export const getAllPostCount = async () => (await getPostList()).length;
 
 // 카테고리 전부
-export const getCategoryList = async () => {
+export const getCategoryList = () => {
     //모든 글 탐색
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
 

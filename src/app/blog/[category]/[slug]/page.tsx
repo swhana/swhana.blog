@@ -5,10 +5,27 @@ import Comments from "@/components/comments/Comments";
 import PostBody from "@/components/post_detail/PostBody";
 import PostHeader from "@/components/post_detail/PostHeader";
 import Sidebar from "@/components/post_detail/ToC_Sidebar";
-import { getPostDetail, parseToc } from "@/lib/posts";
+import {
+    getPostDetail,
+    getPostPaths,
+    parsePostAbstract,
+    parseToc,
+} from "@/lib/posts";
 
 interface PostDetailProps {
     params: { category: string; slug: string };
+}
+
+export function generateStaticParams() {
+    const postPaths: string[] = getPostPaths();
+    const paramList = postPaths
+        .map((path) => parsePostAbstract(path))
+        .map((item) => ({
+            category: item.categoryPath,
+            slug: item.slug,
+        }));
+
+    return paramList;
 }
 
 export default async function PostDetailPage({
