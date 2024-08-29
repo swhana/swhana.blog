@@ -11,13 +11,15 @@ type Props = {
     params: { category: string };
 };
 
-export function generateStaticParams() {
-    const categoryList = getCategoryList();
-    const paramList = categoryList.map((category) => ({ category }));
+export const dynamicParams = false;
 
-    return paramList;
-}
+// export function generateStaticParams() {
+//     const categoryList = getCategoryList();
+//     const paramList = categoryList.map((category) => ({ category }));
 
-export default function CategoryPage({ params }: Props) {
-    return <PostListPage category={params.category} />;
+//     return paramList;
+// }
+
+export default function CategoryPage({ params: { category } }: Props) {
+    return <PostListPage category={category} />;
 }

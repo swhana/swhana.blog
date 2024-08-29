@@ -60,5 +60,10 @@
         "tailwindcss": "^3.4.1",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.2.0"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false
     }
 }

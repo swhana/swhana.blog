@@ -39,9 +39,8 @@ export default function TotalPostList({
             <div className="flex justify-between mb-10">
                 <ul className="flex gap-3">
                     <CategoryBtn
-                        key={"All"}
-                        name={"All"}
-                        href={`/blog/`}
+                        name="All"
+                        href="/blog"
                         isCurrent={currentCategory === "All"}
                         count={allPostCount}
                     />

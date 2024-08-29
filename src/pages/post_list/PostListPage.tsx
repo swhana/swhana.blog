@@ -10,6 +10,7 @@ import TotalPostList from "@/components/post_list/TotalPostList";
 interface PostListProps {
     category?: string;
 }
+
 export default async function PostListPage({ category }: PostListProps) {
     const postList = await getSortedPostList(category);
     const categoryList = await getCategoryList();

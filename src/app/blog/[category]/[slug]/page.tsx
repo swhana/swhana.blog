@@ -16,6 +16,8 @@ interface PostDetailProps {
     params: { category: string; slug: string };
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
     const postPaths: string[] = getPostPaths();
     const paramList = postPaths
