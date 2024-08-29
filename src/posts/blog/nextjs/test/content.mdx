@@ -2,30 +2,45 @@
 title: "블로그 만들기"
 date: 2024-08-24
 description: 블로그 만들기
-thumbnail: /blog/posts/nextjs/test/thumbnail.jpg
+thumbnail: /blog/posts/nextjs/test/thumbnail.png
 ---
 
 ## 1. 참고한 레퍼런스
 
 https://d5br5.dev/blog/nextjs_blog/setup
-https://github.com/d5br5/d5br5.blog
 https://yiyb-blog.vercel.app/posts/nextjs-contentlayer-blog
 https://velog.io/@yooji0415/Next.js-블로그-개발기
 https://miryang.dev/blog/build-blog-with-nextjs
-https://github.com/MiryangJung/miryang.dev
 
 ## 2. 구현할 기능
 
 ### 필수기능
 
--   게시글 목록 페이지
--   게시글 상세 페이지
+-   ~~게시글 목록 페이지~~
+-   ~~게시글 상세 페이지~~
 
-### 선택기능
+### 추가기능
 
--   댓글 기능
--   다크모드 / 라이트모드 / 추가 테마
--   목차 사이드 바
+-   ~~댓글 기능~~
+-   ~~다크모드 / 라이트모드~~ / 추가 테마
+-   ~~목차 사이드 바(ToC)~~
+- 	~~프로젝트 레이아웃 구현~~
+    - ~~카드형으로 프로젝트 개요 소개, 누르면 상세페이지 구현~~
+- 	~~글 목록 리스트 그리드형 / 리스트형 분리~~
+- 	반응형 레이아웃 구현
+    - sm, md, lg
+
+- 	공방 레이아웃 구현
+    - 만들고 싶은거 만드는 느낌
+
+- 	자기소개 페이지 구현
+- 	포스트 검색 기능 추가
+- 	릿코드 / 백준 푼 문제 자동 블로그 포스팅
+    - 이미 확장프로그램으로 [README.md](http://README.md) + 풀이.js 파일로 깃에 커밋해주는건 가능함
+    - mdx 파일 형태로 만들어서 블로그 레포에 커밋하면 자동 블로그 포스팅되지 않을까 예상
+    - md + js로 mdx 파싱해서 커밋하게 해주는 기능
+- 	마인드맵
+    - css 애니메이션으로 구현해볼 예정
 
 ## 3. 기술스택 정하기
 
@@ -43,44 +58,22 @@ https://github.com/MiryangJung/miryang.dev
 
 ## 4. 컨벤션 정하기
 
-혼자 하는 일이지만, git을 사용할 때 꾸준히 컨벤션을 사용하는 습관을 들여놔야 할 것 같다. 나중에 내 코드나 커밋 기록을 돌려볼 때도 도움이 되고
-
 ```jsx
 Feat: 새로운 기능 추가
 Refactor: 코드 리팩토링
 Fix: 버그 수정
+Design: CSS 등 디자인 추가 / 수정
 Env: 개발 환경설정
 Style: 코드 스타일 수정
-Design: CSS 등 디자인 추가 / 수정
 Comment: 주석 추가 / 수정
 Docs: 내부 문서 추가 / 수정
 Test: 테스트 추가 / 수정
 Chore: 빌드 관련 코드 수정
 Rename: 파일 및 폴더명 수정
 Remove: 파일 삭제
+Post: 블로그에 포스팅
 ```
 
 ### 디렉토리 구조 설계
 
-```jsx
-public/
-	assets/
-		posts: 게시글에 사용할 이미지 등 저장
-
-src/
-	app
-	lib: hook
-	components: 여러 페이지에서 공용되는 컴포넌트
-	config: const, type, style
-	layouts: 전체적인 화면 레이아웃(header, footer, sidebar 등)
-	posts: 게시글 mdx 파일 저장
-
-```
-
-```jsx
-// 일반적인 게시글
-src / posts / [tabs] / [categories] / [slug] / page.tsx;
-
-//게시글 원본 위치
-posts / [categories] / [title] / content.mdx;
-```
+![디렉토리 구조](/blog/posts/nextjs/test/imgs/1.png)
