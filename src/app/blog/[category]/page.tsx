@@ -13,13 +13,14 @@ type Props = {
 
 export const dynamicParams = false;
 
-// export function generateStaticParams() {
-//     const categoryList = getCategoryList();
-//     const paramList = categoryList.map((category) => ({ category }));
-
-//     return paramList;
-// }
-
-export default function CategoryPage({ params: { category } }: Props) {
-    return <PostListPage category={category} />;
+export function generateStaticParams() {
+    const categoryList = getCategoryList();
+    const paramList = categoryList.map((category) => ({ category }));
+    return paramList;
 }
+
+const CategoryPage = async ({ params }: Props) => {
+    return <PostListPage category={params.category} />;
+};
+
+export default CategoryPage;

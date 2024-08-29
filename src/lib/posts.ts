@@ -91,8 +91,14 @@ export const getPostDetail = async (category: string, slug: string) => {
 
 export const getAllPostCount = async () => (await getPostList()).length;
 
-// 카테고리 전부
 export const getCategoryList = () => {
+    const paths: string[] = sync(`${POST_PATH}/*`);
+    const list = paths.map((path) => path.split("\\").slice(-1)?.[0]);
+    return list;
+};
+
+// 카테고리 전부
+export const getCategoryDetailList = () => {
     //모든 글 탐색
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
 

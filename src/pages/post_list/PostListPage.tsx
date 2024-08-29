@@ -1,29 +1,38 @@
 // 전체 포스트 썸네일 보여주는 개요 페이지
 
+import CategoryList from "@/components/post_list/CategoryList";
+import PostCard from "@/components/post_list/PostCard";
 import {
     getAllPostCount,
-    getCategoryList,
+    getCategoryDetailList,
     getSortedPostList,
 } from "@/lib/posts";
-import TotalPostList from "@/components/post_list/TotalPostList";
 
 interface PostListProps {
     category?: string;
 }
 
-export default async function PostListPage({ category }: PostListProps) {
+const PostListPage = async ({ category }: PostListProps) => {
     const postList = await getSortedPostList(category);
-    const categoryList = await getCategoryList();
+    const categoryList = await getCategoryDetailList();
     const allPostCount = await getAllPostCount();
 
     return (
         <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
-            <TotalPostList
+            <CategoryList
                 categoryList={categoryList}
                 allPostCount={allPostCount}
                 currentCategory={category}
-                list={postList}
             />
+            <section>
+                <ul className="flex flex-col gap-8 lg:gap-12">
+                    {postList.map((post) => (
+                        <PostCard key={post.url + post.date} post={post} />
+                    ))}
+                </ul>
+            </section>
         </section>
     );
-}
+};
+
+export default PostListPage;
