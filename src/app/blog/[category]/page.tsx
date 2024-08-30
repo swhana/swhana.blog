@@ -4,12 +4,12 @@
  * 실제 포스트 상세는 [slug] 하위 디렉토리로
  */
 
+import PostListPage from "@/components/post_list/PostListPage";
 import {
     getAllPostCount,
     getCategoryDetailList,
     getSortedPostList,
 } from "@/lib/posts";
-import PostListPage from "@/pages/post_list/PostListPage";
 
 export const dynamicParams = false;
 
