@@ -36,10 +36,10 @@ const parsePostDetail = async (postPath: string) => {
 export const parsePostAbstract = (postPath: string) => {
     const filePath = postPath
         .slice(postPath.indexOf(BASE_PATH))
-        .replace(`${BASE_PATH}\\`, "")
+        .replace(`${BASE_PATH}/`, "")
         .replace(".mdx", "");
 
-    const [categoryPath, slug] = filePath.split("\\"); // blog/[categoryPath]/[slug]
+    const [categoryPath, slug] = filePath.split("/"); // blog/[categoryPath]/[slug]
     const url = `/blog/${categoryPath}/${slug}`; // 글 상세 페이지 들어갈 때 링크용
     const categoryName = getCategoryName(categoryPath);
     // console.log(categoryPath);
@@ -86,7 +86,7 @@ export const getSortedPostList = async (category?: string): Promise<Post[]> => {
 
 // 포스트 상세 내용 조회
 export const getPostDetail = async (category: string, slug: string) => {
-    const filePath = `${POST_PATH}\\${category}\\${slug}\\content.mdx`; // app 디렉토리 안에 파일경로
+    const filePath = `${POST_PATH}/${category}/${slug}/content.mdx`; // app 디렉토리 안에 파일경로
     const postDetail = await parsePost(filePath);
     return postDetail;
 };
@@ -95,7 +95,7 @@ export const getAllPostCount = async () => (await getPostList()).length;
 
 export const getCategoryList = () => {
     const paths: string[] = sync(`${POST_PATH}/*`);
-    const list = paths.map((path) => path.split("\\").slice(-1)?.[0]);
+    const list = paths.map((path) => path.split("/").slice(-1)?.[0]);
     return list;
 };
 
@@ -105,7 +105,7 @@ export const getCategoryDetailList = () => {
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
 
     const postListByCategory = postPaths.map(
-        (path) => path.replace(`${BASE_PATH}\\`, "").split("\\")[0],
+        (path) => path.replace(`${BASE_PATH}/`, "").split("/")[0],
     );
 
     const result: { [key: string]: number } = {};

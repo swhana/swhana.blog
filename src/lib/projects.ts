@@ -27,7 +27,7 @@ const parseProject = async (projectPath: string) => {
     //project name에 해당하는 부분
     const slug = projectPath
         .slice(projectPath.indexOf(BASE_PATH))
-        .replace(`${BASE_PATH}\\`, "")
+        .replace(`${BASE_PATH}/`, "")
         .replace(".mdx", "");
 
     return {
