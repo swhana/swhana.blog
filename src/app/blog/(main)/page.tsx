@@ -8,11 +8,12 @@ import {
     getSortedPostList,
 } from "@/lib/posts";
 
-const PostListPage = async () => {
+const PostListPage = async ({ params }) => {
     const postList = await getSortedPostList();
-    const categoryList = await getCategoryDetailList();
+    const categoryList = getCategoryDetailList();
     const allPostCount = await getAllPostCount();
 
+    console.log(params);
     return (
         <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
             <CategoryList

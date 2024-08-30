@@ -8,7 +8,9 @@ import PostListPage from "@/components/post_list/PostListPage";
 import {
     getAllPostCount,
     getCategoryDetailList,
+    getPostPaths,
     getSortedPostList,
+    parsePostAbstract,
 } from "@/lib/posts";
 
 export const dynamicParams = false;
@@ -16,15 +18,25 @@ export const dynamicParams = false;
 type Props = {
     params: { category: string };
 };
+export async function generateStaticParams() {
+    const postPaths: string[] = getPostPaths();
+    const paramList = postPaths
+        .map((path) => parsePostAbstract(path))
+        .map((item) => ({
+            category: item.categoryPath,
+        }));
 
-const CategoryPage = async ({ params }: Props) => {
-    const postList = await getSortedPostList(params.category);
-    const categoryList = await getCategoryDetailList();
+    return paramList;
+}
+
+const CategoryPage = async ({ params: { category } }: Props) => {
+    const postList = await getSortedPostList(category);
+    const categoryList = getCategoryDetailList();
     const allPostCount = await getAllPostCount();
 
     return (
         <PostListPage
-            category={params.category}
+            category={category}
             postList={postList}
             categoryList={categoryList}
             allPostCount={allPostCount}

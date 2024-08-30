@@ -98,38 +98,16 @@ export const getCategoryList = () => {
 };
 
 // 카테고리 전부
-// export const getCategoryDetailList = () => {
-//     //모든 글 탐색
-//     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
+export const getCategoryDetailList = () => {
+    //모든 글 탐색
+    const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
 
-//     const postListByCategory = postPaths.map(
-//         (path) => path.replace(`${BASE_PATH}\\`, "").split("\\")[0],
-//     );
+    const postListByCategory = postPaths.map(
+        (path) => path.replace(`${BASE_PATH}\\`, "").split("\\")[0],
+    );
 
-//     const result: { [key: string]: number } = {};
-//     for (const category of postListByCategory) {
-//         if (result[category]) {
-//             result[category] += 1;
-//         } else {
-//             result[category] = 1;
-//         }
-//     }
-//     const detailList: CategoryDetail[] = Object.entries(result).map(
-//         ([category, count]) => ({
-//             dirName: category,
-//             publicName: getCategoryName(category),
-//             count,
-//         }),
-//     );
-
-//     return detailList;
-// };
-
-export const getCategoryDetailList = async () => {
-    const postList = await getPostList();
     const result: { [key: string]: number } = {};
-    for (const post of postList) {
-        const category = post.categoryPath;
+    for (const category of postListByCategory) {
         if (result[category]) {
             result[category] += 1;
         } else {
@@ -146,6 +124,28 @@ export const getCategoryDetailList = async () => {
 
     return detailList;
 };
+
+// export const getCategoryDetailList = async () => {
+//     const postList = await getPostList();
+//     const result: { [key: string]: number } = {};
+//     for (const post of postList) {
+//         const category = post.categoryPath;
+//         if (result[category]) {
+//             result[category] += 1;
+//         } else {
+//             result[category] = 1;
+//         }
+//     }
+//     const detailList: CategoryDetail[] = Object.entries(result).map(
+//         ([category, count]) => ({
+//             dirName: category,
+//             publicName: getCategoryName(category),
+//             count,
+//         }),
+//     );
+
+//     return detailList;
+// };
 
 export const parseToc = (content: string) => {
     //markdown에서 ##(h2: 제목)이나 ###(h3: 소제목)으로 시작하는 문서 찾기
