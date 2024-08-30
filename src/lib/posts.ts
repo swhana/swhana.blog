@@ -59,6 +59,8 @@ const parsePost = async (postPath: string): Promise<Post> => {
 export const getPostPaths = (category?: string) => {
     const folder = category || "**";
     const postPaths: string[] = sync(`${POST_PATH}/${folder}/**/*.mdx`);
+    console.log("post paths: " + POST_PATH);
+    console.log(postPaths);
 
     return postPaths;
 };
