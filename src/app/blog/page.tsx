@@ -13,7 +13,7 @@ const PostListPage = async () => {
     const categoryList = getCategoryDetailList();
     const allPostCount = await getAllPostCount();
 
-    console.log(postList, categoryList, allPostCount);
+    console.log(categoryList);
     return (
         <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
             <CategoryList

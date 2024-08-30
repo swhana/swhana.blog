@@ -16,20 +16,24 @@ import {
 export const dynamicParams = false;
 
 type Props = {
-    params: { category: string };
+    params: { category: string; slug: string };
 };
+
 export function generateStaticParams() {
     const postPaths: string[] = getPostPaths();
     const paramList = postPaths
         .map((path) => parsePostAbstract(path))
         .map((item) => ({
             category: item.categoryPath,
+            slug: item.slug,
         }));
+
+    console.log("Generated Params:", paramList);
 
     return paramList;
 }
 
-const CategoryPage = async ({ params: { category } }: Props) => {
+const CategoryPage = async ({ params: { category, slug } }: Props) => {
     const postList = await getSortedPostList(category);
     const categoryList = getCategoryDetailList();
     const allPostCount = await getAllPostCount();
