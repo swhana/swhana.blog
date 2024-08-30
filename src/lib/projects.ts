@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { sync } from "glob";
 
 // Window의 경우 경로를 \로 표시하고, MacOS의 경우 /로 표시하는 것에 주의해야한다
-const BASE_PATH = "src\\posts\\project"; // 실제 포스트 mdx 파일이 위치하는 장소
+const BASE_PATH = "src/posts/project"; // 실제 포스트 mdx 파일이 위치하는 장소
 const PROJECT_PATH = path.join(process.cwd(), BASE_PATH); // Node.js의 path모듈로 상대 경로를 절대 경로로 바꿈
 
 // mdx파일 파싱
