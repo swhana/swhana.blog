@@ -3,10 +3,6 @@ import { getSortedProjectList } from "@/lib/projects";
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
-    return [];
-}
-
 async function Project() {
     const content = await getSortedProjectList();
 
