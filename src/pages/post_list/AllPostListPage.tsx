@@ -8,25 +8,17 @@ import {
     getSortedPostList,
 } from "@/lib/posts";
 
-interface PostListProps {
-    category?: string;
-    postList;
-    categoryList;
-    allPostCount;
-}
+const PostListPage = async () => {
+    const postList = await getSortedPostList();
+    const categoryList = await getCategoryDetailList();
+    const allPostCount = await getAllPostCount();
 
-const PostListPage = async ({
-    category,
-    postList,
-    categoryList,
-    allPostCount,
-}: PostListProps) => {
     return (
         <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
             <CategoryList
                 categoryList={categoryList}
                 allPostCount={allPostCount}
-                currentCategory={category}
+                currentCategory={"All"}
             />
             <section>
                 <ul className="flex flex-col gap-8 lg:gap-12">

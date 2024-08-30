@@ -4,23 +4,32 @@
  * 실제 포스트 상세는 [slug] 하위 디렉토리로
  */
 
-import { getCategoryList } from "@/lib/posts";
+import {
+    getAllPostCount,
+    getCategoryDetailList,
+    getSortedPostList,
+} from "@/lib/posts";
 import PostListPage from "@/pages/post_list/PostListPage";
+
+export const dynamicParams = false;
 
 type Props = {
     params: { category: string };
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-    const categoryList = getCategoryList();
-    const paramList = categoryList.map((category) => ({ category }));
-    return paramList;
-}
-
 const CategoryPage = async ({ params }: Props) => {
-    return <PostListPage category={params.category} />;
+    const postList = await getSortedPostList(params.category);
+    const categoryList = await getCategoryDetailList();
+    const allPostCount = await getAllPostCount();
+
+    return (
+        <PostListPage
+            category={params.category}
+            postList={postList}
+            categoryList={categoryList}
+            allPostCount={allPostCount}
+        />
+    );
 };
 
 export default CategoryPage;
