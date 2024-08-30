@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { sync } from "glob";
 
 // Window의 경우 경로를 \로 표시하고, MacOS의 경우 /로 표시하는 것에 주의해야한다
-const BASE_PATH = "src/posts/blog"; // 실제 포스트 mdx 파일이 위치하는 장소
+const BASE_PATH = path.join('src', 'posts', 'blog');
 const POST_PATH = path.join(process.cwd(), BASE_PATH); // Node.js의 path모듈로 상대 경로를 절대 경로로 바꿈
 
 // category folder name => public name
@@ -36,13 +36,12 @@ const parsePostDetail = async (postPath: string) => {
 export const parsePostAbstract = (postPath: string) => {
     const filePath = postPath
         .slice(postPath.indexOf(BASE_PATH))
-        .replace(`${BASE_PATH}/`, "")
+        .replace(`${BASE_PATH}` + path.sep, "")
         .replace(".mdx", "");
 
-    const [categoryPath, slug] = filePath.split("/"); // blog/[categoryPath]/[slug]
+    const [categoryPath, slug] = filePath.split(path.sep); // blog/[categoryPath]/[slug]
     const url = `/blog/${categoryPath}/${slug}`; // 글 상세 페이지 들어갈 때 링크용
     const categoryName = getCategoryName(categoryPath);
-    console.log("filePath: " + filePath);
 
     return { url, categoryPath, categoryName, slug };
 };
@@ -52,7 +51,6 @@ const parsePost = async (postPath: string): Promise<Post> => {
     const postAbstract = parsePostAbstract(postPath); //개요 파싱
     const postDetail = await parsePostDetail(postPath); //상세내용 파싱
 
-    console.log("parsePost의 postPath: " + postPath);
     return { ...postAbstract, ...postDetail };
 };
 
@@ -60,7 +58,6 @@ const parsePost = async (postPath: string): Promise<Post> => {
 export const getPostPaths = (category?: string) => {
     const folder = category || "**";
     const postPaths: string[] = sync(`${POST_PATH}/${folder}/**/*.mdx`);
-
     return postPaths;
 };
 
@@ -85,7 +82,8 @@ export const getSortedPostList = async (category?: string): Promise<Post[]> => {
 
 // 포스트 상세 내용 조회
 export const getPostDetail = async (category: string, slug: string) => {
-    const filePath = `${POST_PATH}/${category}/${slug}/content.mdx`; // app 디렉토리 안에 파일경로
+    const filePath = path.join(POST_PATH, category, slug, 'content.mdx')
+    
     const postDetail = await parsePost(filePath);
     return postDetail;
 };
@@ -94,7 +92,8 @@ export const getAllPostCount = async () => (await getPostList()).length;
 
 export const getCategoryList = () => {
     const paths: string[] = sync(`${POST_PATH}/*`);
-    const list = paths.map((path) => path.split("/").slice(-1)?.[0]);
+    console.log(paths)
+    const list = paths.map((p) => p.split(path.sep).slice(-1)?.[0]);
     return list;
 };
 
@@ -102,9 +101,9 @@ export const getCategoryList = () => {
 export const getCategoryDetailList = () => {
     //모든 글 탐색
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
-
+ 
     const postListByCategory = postPaths.map(
-        (path) => path.replace(`${POST_PATH}/`, "").split("/")[0],
+        (p) => p.replace(`${BASE_PATH}` + path.sep, "").split(path.sep)[0],
     );
 
     const result: { [key: string]: number } = {};
