@@ -12,11 +12,13 @@ const BASE_PATH = path.join('src', 'posts', 'blog');
 const POST_PATH = path.join(process.cwd(), BASE_PATH); // Node.js의 path모듈로 상대 경로를 절대 경로로 바꿈
 
 // category folder name => public name
-export const getCategoryName = (dirPath: string) =>
+export const getCategoryName = (dirPath: string) => 
     dirPath
         .split("_")
         .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
         .join(" ");
+
+    
 
 // post 세부 내용 파싱
 const parsePostDetail = async (postPath: string) => {
@@ -92,7 +94,6 @@ export const getAllPostCount = async () => (await getPostList()).length;
 
 export const getCategoryList = () => {
     const paths: string[] = sync(`${POST_PATH}/*`);
-    console.log(paths)
     const list = paths.map((p) => p.split(path.sep).slice(-1)?.[0]);
     return list;
 };
@@ -102,8 +103,9 @@ export const getCategoryDetailList = () => {
     //모든 글 탐색
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
  
+    const PATH = path.sep === '\\' ? BASE_PATH : POST_PATH;
     const postListByCategory = postPaths.map(
-        (p) => p.replace(`${BASE_PATH}` + path.sep, "").split(path.sep)[0],
+        (p) => p.replace(PATH + path.sep, "").split(path.sep)[0]
     );
 
     const result: { [key: string]: number } = {};
