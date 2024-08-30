@@ -104,7 +104,7 @@ export const getCategoryDetailList = () => {
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
 
     const postListByCategory = postPaths.map(
-        (path) => path.replace(`${BASE_PATH}/`, "").split("/")[0],
+        (path) => path.replace(`${POST_PATH}/`, "").split("/")[0],
     );
 
     const result: { [key: string]: number } = {};
