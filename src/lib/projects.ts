@@ -43,8 +43,6 @@ const parseProject = async (projectPath: string) => {
 // 모든 프로젝트 목록 조회
 export const getProjectList = async (): Promise<Project[]> => {
     const paths: string[] = sync(`${PROJECT_PATH}/**/*.mdx`);
-    console.log("project path: " + PROJECT_PATH);
-    console.log(paths);
 
     // 각각의 포스트 경로에 대하여 parsePost 진행
     const projectList = await Promise.all(

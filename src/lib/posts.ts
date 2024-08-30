@@ -42,7 +42,7 @@ export const parsePostAbstract = (postPath: string) => {
     const [categoryPath, slug] = filePath.split("/"); // blog/[categoryPath]/[slug]
     const url = `/blog/${categoryPath}/${slug}`; // 글 상세 페이지 들어갈 때 링크용
     const categoryName = getCategoryName(categoryPath);
-    // console.log(categoryPath);
+    console.log("filePath: " + filePath);
 
     return { url, categoryPath, categoryName, slug };
 };
@@ -52,6 +52,7 @@ const parsePost = async (postPath: string): Promise<Post> => {
     const postAbstract = parsePostAbstract(postPath); //개요 파싱
     const postDetail = await parsePostDetail(postPath); //상세내용 파싱
 
+    console.log("parsePost의 postPath: " + postPath);
     return { ...postAbstract, ...postDetail };
 };
 
@@ -59,8 +60,6 @@ const parsePost = async (postPath: string): Promise<Post> => {
 export const getPostPaths = (category?: string) => {
     const folder = category || "**";
     const postPaths: string[] = sync(`${POST_PATH}/${folder}/**/*.mdx`);
-    console.log("post paths: " + POST_PATH);
-    console.log(postPaths);
 
     return postPaths;
 };
