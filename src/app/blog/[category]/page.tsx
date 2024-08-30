@@ -14,10 +14,33 @@ import {
 } from "@/lib/posts";
 
 type Props = {
-    params: { category: string };
+    params: { category: string; slug: string };
 };
 
-const CategoryPage = async ({ params: { category } }: Props) => {
+export function generateStaticParams() {
+    try {
+        const postPaths = getPostPaths();
+        console.log("Post Paths:", postPaths); // 파일 경로 확인
+
+        const paramList = postPaths
+            .map((path) => {
+                const parsed = parsePostAbstract(path);
+                console.log("Parsed Path:", parsed); // 파싱된 데이터 확인
+                return parsed;
+            })
+            .map((item) => ({
+                category: item.categoryPath,
+            }));
+
+        console.log("Generated Params:", paramList); // 최종 생성된 파라미터
+        return paramList;
+    } catch (error) {
+        console.error("Error in generateStaticParams:", error);
+        return [];
+    }
+}
+
+const CategoryPage = async ({ params: { category, slug } }: Props) => {
     const postList = await getSortedPostList(category);
     const categoryList = getCategoryDetailList();
     const allPostCount = await getAllPostCount();
