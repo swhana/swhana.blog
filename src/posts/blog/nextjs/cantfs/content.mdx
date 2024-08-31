@@ -1,0 +1,73 @@
+---
+title: "Module not found: Can't resolve 'fs'"
+date: 2024-08-31
+description: 블로그 빌드하면서 가장 많이 마주쳤던 문제인 Can't resolve 'fs'에 대해
+thumbnail: /
+---
+
+<Callout type="warn">
+Next.js 14.2.6 버전을 기반으로 작성된 글입니다.(중요)
+</Callout>
+
+## Module not found: Can't resolve 'fs' '만' 떴다면
+만약 다른 오류가 없이 이 오류만 떴다면 임시방편책으로 해결이 가능하다.
+
+`next.config.js` 혹은 `next.config.mjs`에 
+```js
+    //const nextConfig = {}가 있다면 그 안에 넣어주면 됩니다
+    webpack: (config) => {   
+          config.resolve.fallback = {
+            fs: false,
+            path: false,
+          };
+       
+        return config;
+      },
+```
+이렇게 해주면 Webpack이 클라이언트 번들에서 Node.js의 fs, path 모듈을 무시하므로 오류가 뜨지 않는다.
+
+코드 구조에 따라 다르겠지만 이걸로 문제가 해결되는 케이스도 있을 것이다.
+
+나는 그렇지 못했다...
+
+
+## App router와 Page router
+![여기서 문제점을 바로 찾았다면...](/blog/posts/nextjs/cantfs/imgs/1.png)
+
+Next.js는 13버전 정도부터 App routing을 지원하기 시작했고, 내가 쓰는 14.2.6버전에 와서는 App router의 사용을 권장하고 있다.
+기본적으로 app 디렉토리 하위의 페이지들은 서버 컴포넌트로 취급되며, 여기서 Node.js의 fs 모듈, path 모듈 등을 호출해서 사용해도 아무 문제가 되지 않는다.
+
+다만... pages 디렉토리라면 이야기가 달라진다.
+
+pages 디렉토리는 App router가 사용되기 전 Next.js의 기본적인 라우팅 방법인 Page router의 기본 디렉토리였다.
+pages 디렉토리 하위의 페이지들은 클라이언트 컴포넌트로 취급되고, 서버 쪽에서 데이터를 가져오거나 하려면 getStaticProps(), getStaticPaths() 등의 전용 함수를 호출해야 한다.
+
+나는 그런 것도 모르고 컴포넌트와 페이지를 구분하고 싶은 마음에 components와 pages를 나눠서 프로젝트 폴더 구조를 설계했다.
+그래서 pages 안의 PostListPage.tsx에서 fs, path 모듈을 사용하는 함수를 호출하자 오류가 발생한 것이었다.
+
+![이런 오류가 같이 뜬다면 의심해보시길...](/blog/posts/nextjs/cantfs/imgs/2.png)
+
+Module build failed: UnhandledSchemeError: Reading from "node:events" is not handled by plugins.
+Webpack supports "data:" and "file:" URIs by default.
+You may need an additional plugin to handle "node:" URIs.
+
+이런 오류 문구에 매몰되서 Webpack 문제인가? 계속 찾아볼 필요는 없다.
+좀 더 내려보면
+
+
+![문제의 근원](/blog/posts/nextjs/cantfs/imgs/3.png)
+
+소스를 거슬러 올라가 어느 파일에서 문제가 생기는지 알 수 있다.
+
+나는 계속해서 저 posts.ts 파일과 PostListPage.tsx 파일에서만 문제가 발생했는데,
+PostListPage.tsx의 파일 위치가 문제라고는 전혀 생각 못한 채 다른 곳에서 원인을 찾느라 시간을 잡아먹었다.
+
+결론은 posts 디렉토리 하위만 아니면 된다. components 디렉토리 안으로 PagePostList.tsx를 이동시켰더니 문제가 해결됐다.
+아마도 이후에 Next.js 14를 사용하는 사람은 대부분 App routing으로 넘어갈테니 이런 일을 겪는 사람은 잘 없을 거라 생각하지만
+나처럼 App routing을 사용하면서 pages 디렉토리를 만드는 것만 유의하면 될 듯 하다.
+
+
+
+
+그래도 덕분에 Next.js의 공식문서를 탐독하다시피 해서 App router, Page router 뿐 아니라 SSR, SSG 등의 개념도 좀 더 깊이 이해하는 계기가 되었다.
+이건 나중에 따로 포스팅할 예정이다.
