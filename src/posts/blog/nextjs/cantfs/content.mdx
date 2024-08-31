@@ -47,27 +47,19 @@ pages 디렉토리 하위의 페이지들은 클라이언트 컴포넌트로 취
 
 ![이런 오류가 같이 뜬다면 의심해보시길...](/blog/posts/nextjs/cantfs/imgs/2.png)
 
-Module build failed: UnhandledSchemeError: Reading from "node:events" is not handled by plugins.
+`Module build failed: UnhandledSchemeError: Reading from "node:events" is not handled by plugins.
 Webpack supports "data:" and "file:" URIs by default.
-You may need an additional plugin to handle "node:" URIs.
+You may need an additional plugin to handle "node:" URIs.`
 
 이런 오류 문구에 매몰되서 Webpack 문제인가? 계속 찾아볼 필요는 없다.
-좀 더 내려보면
 
 
-![문제의 근원](/blog/posts/nextjs/cantfs/imgs/3.png)
+![](/blog/posts/nextjs/cantfs/imgs/3.png)
+이걸 보고 아 posts.ts가 문제구나! 라고 단정해서도 안된다. posts.ts 안의 함수를 호출한 위치가 문제일 수도 있다.
 
-소스를 거슬러 올라가 어느 파일에서 문제가 생기는지 알 수 있다.
 
-나는 계속해서 저 posts.ts 파일과 PostListPage.tsx 파일에서만 문제가 발생했는데,
-PostListPage.tsx의 파일 위치가 문제라고는 전혀 생각 못한 채 다른 곳에서 원인을 찾느라 시간을 잡아먹었다.
+이런 저런 시도 끝에 posts 디렉토리 하위만 아니면 된다는걸 알았다. app 디렉토리나 components 디렉토리 하위로 PagePostList.tsx를 이동시키면
+해당 컴포넌트들은 서버 컴포넌트 취급을 받기 때문에 빌드 시에 서버 쪽에서 Node.js 관련 모듈들을 사용할 수 있게 된다.
 
-결론은 posts 디렉토리 하위만 아니면 된다. components 디렉토리 안으로 PagePostList.tsx를 이동시켰더니 문제가 해결됐다.
 아마도 이후에 Next.js 14를 사용하는 사람은 대부분 App routing으로 넘어갈테니 이런 일을 겪는 사람은 잘 없을 거라 생각하지만
 나처럼 App routing을 사용하면서 pages 디렉토리를 만드는 것만 유의하면 될 듯 하다.
-
-
-
-
-그래도 덕분에 Next.js의 공식문서를 탐독하다시피 해서 App router, Page router 뿐 아니라 SSR, SSG 등의 개념도 좀 더 깊이 이해하는 계기가 되었다.
-이건 나중에 따로 포스팅할 예정이다.
