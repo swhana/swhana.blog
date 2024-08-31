@@ -1,34 +1,13 @@
 //카테고리를 아예 입력 안했을 때
 
-import CategoryList from "@/components/post_list/CategoryList";
-import PostCard from "@/components/post_list/PostCard";
-import {
-    getAllPostCount,
-    getCategoryDetailList,
-    getSortedPostList,
-} from "@/lib/posts";
+import PostListPage from "@/components/post_list/PostListPage2";
 
-const PostListPage = async () => {
-    const postList = await getSortedPostList();
-    const categoryList = getCategoryDetailList();
-    const allPostCount = await getAllPostCount();
+
+const BlogPage = async () => {
 
     return (
-        <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
-            <CategoryList
-                categoryList={categoryList}
-                allPostCount={allPostCount}
-                currentCategory={"All"}
-            />
-            <section>
-                <ul className="flex flex-col gap-8 lg:gap-12">
-                    {postList.map((post) => (
-                        <PostCard key={post.url + post.date} post={post} />
-                    ))}
-                </ul>
-            </section>
-        </section>
+        <PostListPage/>
     );
 };
 
-export default PostListPage;
+export default BlogPage;
