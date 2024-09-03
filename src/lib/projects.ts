@@ -66,3 +66,10 @@ export const getProjectImgs = async (project: Project): Promise<string[]> => {
 
     return imgPaths;
 };
+
+//기술 스택 전부 통합하기
+export const getTechStacks = async () => {
+    const projects = await getProjectList();
+
+    return new Set(projects.reduce((arr, curr) => {return [...arr, ...curr.techstacks]}, []));
+}

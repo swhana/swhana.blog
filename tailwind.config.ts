@@ -196,12 +196,23 @@ const config = {
                         opacity: "1",
                     },
                 },
+                "typing-text": {
+                    from: { width: "0%" },
+                    to: { width: "100%" },
+                },
+                "blink-text": {
+                    from: { borderColor: "transparent" },
+                    to: { borderColor: "transparent" },
+                    "50%": { borderColor: "black" },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
                 "slide-in-right-0.5": "slide-in-right 0.5s forwards",
                 "slide-in-right-1": "slide-in-right 1s forwards",
+                "type-text": "typing-text 3.5s steps(40, end)",
+                "blink-caret": "blink-text .75s step-end infinite",
             },
         },
     },

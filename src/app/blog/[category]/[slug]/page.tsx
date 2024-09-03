@@ -34,7 +34,7 @@ export default async function PostDetailPage({
     const toc = parseToc(post.content);
 
     return (
-        <div className="prose mx-auto w-full max-w-[750px] px-5 dark:prose-invert sm:px-6">
+        <div className="prose mx-auto w-full max-w-[750px] px-5 dark:prose-invert sm:px-6 mt-12">
             <PostHeader post={post} />
             <article className="relative">
                 <Sidebar contents={toc} />
