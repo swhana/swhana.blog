@@ -2,33 +2,30 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export const useContentObserver = (query: string) => {
+export const useAboutObserver = (query: string) => {
     const observer = useRef<IntersectionObserver>(); //Intersection Observer를 등록할 ref
     const [targetList, setTargetList] = useState<string[]>([]); //현재 뷰포트가 관찰하는 요소
-    const [tempTargetId, setTempTargetId] = useState("");
 
     //마운트 되면 실행
     useEffect(() => {
         const handleObserver: IntersectionObserverCallback = (entries) => {
             entries.forEach((entry) => {
-                const targetId = `#${entry.target.id}`;
+                const targetId = entry.target.innerHTML;
+
                 //관찰중인 요소가 뷰포트에 진입했을 때
                 if (entry.isIntersecting) {
-                    setTargetList((prev) => [...prev, targetId]);
-                    setTempTargetId(() => "");
+                    setTargetList(() => [targetId]);
                 }
                 //관찰중인 요소가 뷰포트에서 벗어났을 때
                 else {
                     setTargetList((prev) => {
-                        if (prev.length === 1) setTempTargetId(targetId);
                         return prev.filter((element) => element !== targetId);
                     });
                 }
             });
         };
         const scrollMarginOption = {
-            rootMargin: "-32px 0px -60% 0px",
-            threshold: 1,
+            rootMargin: "-48px 0px -70% 0px",
         };
 
         //ref에 옵저버 등록
@@ -43,5 +40,5 @@ export const useContentObserver = (query: string) => {
         return () => observer.current?.disconnect(); //언마운트 될때 옵저버 해제
     }, [query]);
 
-    return [...targetList, tempTargetId];
+    return [...targetList];
 };

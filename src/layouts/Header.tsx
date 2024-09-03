@@ -12,7 +12,7 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <nav className="w-full z-40 flex flex-col justify-center items-center border-b bg-background shadow-sm print:hidden">
+        <nav className="w-full z-40 flex flex-col justify-center items-center border-b bg-background shadow-sm print:hidden fixed">
             <div className="w-full max-w-[750px] h-[64px] flex justify-between items-center mt-1 px-4">
                 <div className="flex items-center font-medium">
                     {navList.map((nav) => (

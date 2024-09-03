@@ -8,17 +8,15 @@ import dayjs from "dayjs";
 import { sync } from "glob";
 
 // Window의 경우 경로를 \로 표시하고, MacOS의 경우 /로 표시하는 것에 주의해야한다
-const BASE_PATH = path.join('src', 'posts', 'blog');
+const BASE_PATH = path.join("src", "posts", "blog");
 const POST_PATH = path.join(process.cwd(), BASE_PATH); // Node.js의 path모듈로 상대 경로를 절대 경로로 바꿈
 
 // category folder name => public name
-export const getCategoryName = (dirPath: string) => 
+export const getCategoryName = (dirPath: string) =>
     dirPath
         .split("_")
         .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
         .join(" ");
-
-    
 
 // post 세부 내용 파싱
 const parsePostDetail = async (postPath: string) => {
@@ -84,8 +82,8 @@ export const getSortedPostList = async (category?: string): Promise<Post[]> => {
 
 // 포스트 상세 내용 조회
 export const getPostDetail = async (category: string, slug: string) => {
-    const filePath = path.join(POST_PATH, category, slug, 'content.mdx')
-    
+    const filePath = path.join(POST_PATH, category, slug, "content.mdx");
+
     const postDetail = await parsePost(filePath);
     return postDetail;
 };
@@ -102,10 +100,10 @@ export const getCategoryList = () => {
 export const getCategoryDetailList = () => {
     //모든 글 탐색
     const postPaths: string[] = sync(`${POST_PATH}/**/**/*.mdx`);
- 
-    const PATH = path.sep === '\\' ? BASE_PATH : POST_PATH;
+
+    const PATH = path.sep === "\\" ? BASE_PATH : POST_PATH;
     const postListByCategory = postPaths.map(
-        (p) => p.replace(PATH + path.sep, "").split(path.sep)[0]
+        (p) => p.replace(PATH + path.sep, "").split(path.sep)[0],
     );
 
     const result: { [key: string]: number } = {};
@@ -164,7 +162,7 @@ export const parseToc = (content: string) => {
                 target
                     .replace("# ", "")
                     .replace("#", "")
-                    .replace(/[\[\]:!@#$/%^&*()+=,.]/g, "")
+                    .replace(/[\[\]:'"!@#$/%^&*()+=,.]/g, "")
                     .replace(/ /g, "-")
                     .toLowerCase()
                     .replace("?", ""),

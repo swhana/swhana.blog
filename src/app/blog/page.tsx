@@ -2,12 +2,8 @@
 
 import PostListPage from "@/components/post_list/PostListPage2";
 
-
 const BlogPage = async () => {
-
-    return (
-        <PostListPage/>
-    );
+    return <PostListPage />;
 };
 
 export default BlogPage;
