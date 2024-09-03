@@ -17,15 +17,21 @@ export default function AboutPage({ projects }: Props) {
     const contents = ["Experience", "Education", "Projects"];
 
     return (
-        <div className="flex flex-row">
-            <div id="left" className="w-[250px] pr-4 fixed">
-                <h1 className="font-bold text-4xl">{resume.name}</h1>
-                <p className="text-md text-zinc-500/80 mt-2">
-                    {resume.position}
-                </p>
-                <p className="text-sm mt-2">{resume.description}</p>
-                <aside className="sidebar mt-12">
-                    <div className="">
+        <div className="md:flex md:flex-row">
+            <div
+                id="left"
+                className="max:w-[600px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
+            >
+                <div className="text-center md:text-start">
+                    <h1 className="font-bold text-4xl">{resume.name}</h1>
+                    <p className="text-md text-zinc-500/80 mt-2">
+                        {resume.position}
+                    </p>
+                    <p className="text-sm mt-2">{resume.description}</p>
+                </div>
+
+                <aside className="sidebar mt-12 hidden md:block">
+                    <div>
                         <div className="mb-4 border-l px-4 py-2 animate-slide-in-right-0.5">
                             <ul className="text-md">
                                 {contents.map((content) => {
@@ -65,7 +71,10 @@ export default function AboutPage({ projects }: Props) {
                     </div>
                 </aside>
             </div>
-            <div id="right" className="w-[480px] ml-[250px]">
+            <div
+                id="right"
+                className="flex flex-col justify-center w-[400px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px]"
+            >
                 {/* <p className="text-wrap px-6">{resume.aboutme}</p> */}
                 <div id="Experience" className="scroll-mt-24" />
                 <div>
