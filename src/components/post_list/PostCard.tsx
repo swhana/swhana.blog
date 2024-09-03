@@ -18,7 +18,7 @@ export default function PostCard({ post }: PostCardProps) {
                     <p className="text-lg font-semibold mt-2 group-hover:text-blue-500">
                         {post.title}
                     </p>
-                    <p className="text-sm font-light text-stone-500 truncate-2">
+                    <p className="text-sm font-light dark:text-zinc-200/80 text-zinc-500/80 truncate-2">
                         {desc}
                     </p>
                     <p className="text-xs font-extralight mt-4 mb-1">
