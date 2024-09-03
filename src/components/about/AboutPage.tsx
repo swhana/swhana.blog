@@ -24,7 +24,7 @@ export default function AboutPage({ projects }: Props) {
             >
                 <div className="text-center md:text-start">
                     <h1 className="font-bold text-4xl">{resume.name}</h1>
-                    <p className="text-md text-zinc-500/80 mt-2">
+                    <p className="text-md dark:text-zinc-200/80 text-zinc-500/80 mt-2">
                         {resume.position}
                     </p>
                     <p className="text-sm mt-2">{resume.description}</p>
@@ -89,7 +89,7 @@ export default function AboutPage({ projects }: Props) {
                                 <p className="text-sm">{exp.duration}</p>
                             </div>
                             <div className="w-[380px]">
-                                <p className="font-semibold text-black group-hover:text-blue-700/80">
+                                <p className="font-semibold group-hover:text-blue-700/80">
                                     {exp.title}
                                 </p>
                                 <p className="mt-1 text-md">
@@ -112,7 +112,7 @@ export default function AboutPage({ projects }: Props) {
                                 <p className="text-sm">{edu.duration}</p>
                             </div>
                             <div className="w-[380px]">
-                                <p className="font-semibold text-black group-hover:text-blue-700/80">
+                                <p className="font-semibold group-hover:text-blue-700/80">
                                     {edu.title}
                                 </p>
                                 <p className="mt-1 text-md">
@@ -127,7 +127,7 @@ export default function AboutPage({ projects }: Props) {
                     <div className="flex flex-row justify-between items-center">
                         <h2 className="font-bold text-2xl px-6">Projects</h2>
                         <Link href="/project">
-                            <p className="text-sm text-zinc-500 hover:underline">
+                            <p className="text-sm dark:text-zinc-200/80 text-zinc-500/80 hover:underline">
                                 View Full Projects
                             </p>
                         </Link>
