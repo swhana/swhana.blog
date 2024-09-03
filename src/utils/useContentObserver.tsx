@@ -12,22 +12,32 @@ export const useContentObserver = (query: string) => {
         const handleObserver: IntersectionObserverCallback = (entries) => {
             entries.forEach((entry) => {
                 const targetId = `#${entry.target.id}`;
+                // //관찰중인 요소가 뷰포트에 진입했을 때
+                // if (entry.isIntersecting) {
+                //     setTargetList((prev) => [...prev, targetId]);
+                //     setTempTargetId(() => "");
+                // }
+                // //관찰중인 요소가 뷰포트에서 벗어났을 때
+                // else {
+                //     setTargetList((prev) => {
+                //         if (prev.length === 1) setTempTargetId(targetId);
+                //         return prev.filter((element) => element !== targetId);
+                //     });
+                // }
                 //관찰중인 요소가 뷰포트에 진입했을 때
                 if (entry.isIntersecting) {
-                    setTargetList((prev) => [...prev, targetId]);
-                    setTempTargetId(() => "");
+                    setTargetList(() => [targetId]);
                 }
                 //관찰중인 요소가 뷰포트에서 벗어났을 때
                 else {
                     setTargetList((prev) => {
-                        if (prev.length === 1) setTempTargetId(targetId);
                         return prev.filter((element) => element !== targetId);
                     });
                 }
             });
         };
         const scrollMarginOption = {
-            rootMargin: "-32px 0px -60% 0px",
+            rootMargin: "-48px 0px -60% 0px",
             threshold: 1,
         };
 
@@ -43,5 +53,6 @@ export const useContentObserver = (query: string) => {
         return () => observer.current?.disconnect(); //언마운트 될때 옵저버 해제
     }, [query]);
 
-    return [...targetList, tempTargetId];
+    // return [...targetList, tempTargetId];
+    return [...targetList];
 };
