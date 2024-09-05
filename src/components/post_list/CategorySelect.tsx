@@ -34,7 +34,7 @@ export default function CategorySelect({
             onValueChange={(value) => onChange(value)}
             defaultValue={currentCategory}
         >
-            <SelectTrigger className="w-[180px] md:hidden">
+            <SelectTrigger className="w-[180px] md:hidden mb-4">
                 <SelectValue placeholder={"All (" + allPostCount + ")"} />
             </SelectTrigger>
             <SelectContent>

@@ -16,17 +16,17 @@ export default function AboutPage({ projects }: Props) {
     const contents = ["Experience", "Education", "Projects"];
 
     return (
-        <div className="flex flex-col">
+        <div className="w-full flex flex-col min-w-[400px] max-w-[750px] items-center md:items-start">
             <div
                 id="left"
-                className="max-w-[450px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
+                className="max-w-[400px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
             >
                 <div className="text-center md:text-start">
                     <h1 className="font-bold text-4xl">{resume.name}</h1>
                     <p className="text-md dark:text-zinc-200/80 text-zinc-500/80 mt-2">
                         {resume.position}
                     </p>
-                    <p className="text-sm mt-2">{resume.description}</p>
+                    <p className="text-sm mt-2 ">{resume.description}</p>
                 </div>
 
                 <aside className="sidebar mt-12 hidden md:block">
@@ -72,9 +72,8 @@ export default function AboutPage({ projects }: Props) {
             </div>
             <div
                 id="right"
-                className="flex flex-col justify-center max-w-[450px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px]"
+                className="flex flex-col justify-center max-w-[450px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px] px-4 md:px-0"
             >
-                {/* <p className="text-wrap px-6">{resume.aboutme}</p> */}
                 <div id="Experience" className="scroll-mt-24" />
                 <div>
                     <h2 className="font-bold text-2xl px-6">Experience</h2>
@@ -122,9 +121,9 @@ export default function AboutPage({ projects }: Props) {
                     ))}
                 </div>
                 <div id="Projects" className="scroll-mt-12" />
-                <div className="mt-12" id="Projects">
-                    <div className="flex flex-row justify-between items-center">
-                        <h2 className="font-bold text-2xl px-6">Projects</h2>
+                <div className="mt-12">
+                    <div className="flex flex-row justify-between items-center px-6">
+                        <h2 className="font-bold text-2xl">Projects</h2>
                         <Link href="/project">
                             <p className="text-sm dark:text-zinc-200/80 text-zinc-500/80 hover:underline">
                                 View Full Projects
