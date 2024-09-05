@@ -30,43 +30,39 @@ export default function AboutPage({ projects }: Props) {
                 </div>
 
                 <aside className="sidebar mt-12 hidden md:block">
-                    <div>
-                        <div className="mb-4 border-l px-4 py-2 animate-slide-in-right-0.5">
-                            <ul className="text-md">
-                                {contents.map((content) => {
-                                    const isIntersecting =
-                                        target.includes(content);
+                    <div className="mb-4 animate-slide-in-right-0.5">
+                        <ul className="text-md">
+                            {contents.map((content) => {
+                                const isIntersecting = target.includes(content);
 
-                                    return (
-                                        <li key={content} className="py-3">
-                                            <Link
-                                                href={`#${content}`}
-                                                className="flex group items-center"
+                                return (
+                                    <li key={content} className="py-3">
+                                        <Link
+                                            href={`#${content}`}
+                                            className="flex group items-center"
+                                        >
+                                            <hr
+                                                className={cn(
+                                                    "mr-4 h-px w-8 bg-black group-hover:w-16 transition-all group-hover:bg-blue-500 group-hover:h-[2px]",
+                                                    isIntersecting &&
+                                                        "bg-blue-500 w-16 h-[2px]",
+                                                )}
+                                            />
+
+                                            <span
+                                                className={cn(
+                                                    "text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200 group-hover:text-blue-500",
+                                                    isIntersecting &&
+                                                        "text-blue-500",
+                                                )}
                                             >
-                                                <hr
-                                                    className={cn(
-                                                        "mr-4 h-px w-8 bg-black group-hover:w-16 transition-all group-hover:bg-blue-500 group-hover:h-[2px]",
-                                                        isIntersecting &&
-                                                            "bg-blue-500 w-16 h-[2px]",
-                                                    )}
-                                                />
-
-                                                <span
-                                                    className={cn(
-                                                        "text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200 group-hover:text-blue-500",
-                                                        isIntersecting &&
-                                                            "text-blue-500",
-                                                    )}
-                                                >
-                                                    {content}
-                                                </span>
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </div>
-                        <div className="flex gap-2 animate-slide-in-right-1"></div>
+                                                {content}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </ul>
                     </div>
                 </aside>
             </div>

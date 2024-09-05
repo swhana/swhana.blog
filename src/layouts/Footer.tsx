@@ -1,5 +1,5 @@
 import GithubIcon from "@/components/icons/GithubIcon";
-import { Mail } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -14,6 +14,15 @@ export default function Footer() {
                         className="fill-current hover:fill-blue-500 dark:fill-white"
                         width={24}
                         height={24}
+                    />
+                </Link>
+                <Link
+                    href="https://www.linkedin.com/in/sangwon-han"
+                    target="_blank"
+                >
+                    <Linkedin
+                        width={24}
+                        className="stroke-current hover:stroke-blue-500 dark:fill-white hidden md:block"
                     />
                 </Link>
             </div>
