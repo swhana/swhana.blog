@@ -2,9 +2,8 @@
 
 import { resume } from "@/config/resume";
 import { Project } from "@/config/types";
-import { getSortedProjectList } from "@/lib/projects";
 import { cn } from "@/lib/utils";
-import { useAboutObserver } from "@/utils/useAboutObserver";
+import { useAboutObserver } from "@/utils/useIO";
 import Image from "next/image";
 import Link from "next/link";
 
