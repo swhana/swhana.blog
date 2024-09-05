@@ -1,0 +1,37 @@
+---
+title: "Object-fit 속성 활용하기"
+date: 2024-09-06
+description: 이미지와 컨테이너 사이의 크기를 결정하는 CSS인 Object-fit에 대해 알아보기
+thumbnail: 
+---
+
+Object-fit은 CSS 속성 중 하나로 image나 video와 같은 요소의 크기를 어떤 방식으로 컨테이너 요소에 맞출 지를 지정하는 속성이다.
+
+Next.js를 사용해 블로그를 구성하면서 image 요소를 사용할 일이 잦은데, 일반적인 `<img>`태그 사용보다는 이미지의 최적화를 위해 Next.js의 `<Image>`컴포넌트를 사용하게 되었다.
+`<Image>`컴포넌트는 소스가 로컬 이미지(Local Image)가 아닌 원격 이미지(Remote Image)일 경우 빌드 시에 원격 이미지의 크기를 알 수가 없기 때문에, 
+사전에 width와 height을 지정하거나 fill 속성을 사용해 컨테이너 요소의 크기에 맞춰야 한다. 
+이러면 이미지가 컨테이너 요소에 맞춰서 늘어나거나 잘리는 경우가 생기는데, 상황에 맞게 이미지를 활용하기 위해 Object-fit 속성에 대해 공부하게 되었고 이를 공유하려 한다.
+
+아래는 실제 내 블로그 자기소개 페이지에 구현된 부분을 따와서 활용한 예시이다. 
+나의 경우 이미지의 전체가 나오는 것을 선호하기 때문에 contain을 사용했지만, 좀 더 유연하게 scale-down을 사용해도 괜찮을 듯 하다.
+
+## cover
+image 요소가 가로 세로의 비율을 유지하면서, 컨테이너 요소를 가득 채우면서 덮게 된다. 가로 세로 비율을 유지하기 때문에 image 요소가 잘려나갈 수 있다.
+![object-fit:cover](/blog/posts/css/objectfit/imgs/cover.png)
+
+## contain
+image 요소가 가로 세로의 비율을 유지하면서, 컨테이너 내에 포함되도록 한다.
+![object-fit:contain](/blog/posts/css/objectfit/imgs/contain.png)
+
+## fill
+image 요소가 컨테이너 요소를 가득 채운다. 단, 가로 세로 비율을 유지하지 않기 때문에 이미지가 늘어나게 된다.
+![object-fit:fill](/blog/posts/css/objectfit/imgs/fill.png)
+
+## none
+컨테이너 요소의 크기를 무시하고 image 요소의 원래 크기를 표시한다.
+![object-fit:none](/blog/posts/css/objectfit/imgs/none.png)
+
+## scale-down
+`none`과 `contain`중 더 크기가 작은 쪽을 선택한다.
+![object-fit:scale-down](/blog/posts/css/objectfit/imgs/scale-down.png)
+

@@ -25,17 +25,19 @@ export default function PostCard({ post }: PostCardProps) {
                         {post.dateString}
                     </p>
                 </div>
-                <Image
-                    src={post.thumbnail}
-                    alt={post.title}
-                    width={100}
-                    height={100}
-                    style={{
-                        objectFit: "cover",
-                        borderRadius: 8,
-                        backgroundColor: "#FFF", //배경 투명한 파일 대비
-                    }}
-                />
+                {post.thumbnail && (
+                    <Image
+                        src={post.thumbnail}
+                        alt={post.title}
+                        width={100}
+                        height={100}
+                        style={{
+                            objectFit: "cover",
+                            borderRadius: 8,
+                            backgroundColor: "#FFF", //배경 투명한 파일 대비
+                        }}
+                    />
+                )}
             </li>
         </Link>
     );
