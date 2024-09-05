@@ -6,6 +6,11 @@ import { cn } from "@/lib/utils";
 import { useAboutObserver } from "@/utils/useIO";
 import Image from "next/image";
 import Link from "next/link";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "../ui/hover-card";
 
 type Props = {
     projects: Project[];
@@ -127,37 +132,54 @@ export default function AboutPage({ projects }: Props) {
                         </Link>
                     </div>
                     {projects?.map((p) => (
-                        <Link
-                            href={p.url}
-                            key={p.title + p.endDate}
-                            className="flex flex-row items-start mt-6 pl-4 pr-6 py-4 rounded-md hover:shadow-sm hover:bg-cyan-100/50 group"
-                        >
-                            <div className="w-[120px] relative pr-2 mr-2">
+                        <HoverCard key={p.title + p.endDate}>
+                            <HoverCardTrigger>
+                                <Link
+                                    href={p.url}
+                                    className="flex flex-row items-start mt-6 pl-4 pr-6 py-4 rounded-md hover:shadow-sm hover:bg-cyan-100/50 group"
+                                >
+                                    <div className="w-[120px] relative pr-2 mr-2">
+                                        <Image
+                                            src={p.thumbnail}
+                                            alt={p.title}
+                                            width={100}
+                                            height={100}
+                                            className="aspect-video border-2 border-white group-hover:border-cyan-200/50 rounded-md"
+                                        />
+                                    </div>
+
+                                    <div className="w-[380px] overflow-auto">
+                                        <p className="font-semibold text-lg group-hover:text-blue-700/80">
+                                            {p.title}
+                                        </p>
+                                        <p className="mt-1 text-md">
+                                            {p.description}
+                                        </p>
+                                        <div className="flex flex-row gap-1 flex-wrap mt-1">
+                                            {p.techstacks.map((tech) => (
+                                                <div
+                                                    key={tech}
+                                                    className="rounded-xl bg-slate-800 text-white px-2 py-1 text-xs text-nowrap"
+                                                >
+                                                    {tech}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Link>
+                            </HoverCardTrigger>
+                            <HoverCardContent
+                                className="w-80 aspect-video"
+                                side="right"
+                            >
                                 <Image
                                     src={p.thumbnail}
                                     alt={p.title}
-                                    width={100}
-                                    height={100}
-                                    className="aspect-video border-2 border-white group-hover:border-cyan-200/50 rounded-md"
+                                    fill
+                                    objectFit="contain"
                                 />
-                            </div>
-                            <div className="w-[380px] overflow-auto">
-                                <p className="font-semibold text-lg group-hover:text-blue-700/80">
-                                    {p.title}
-                                </p>
-                                <p className="mt-1 text-md">{p.description}</p>
-                                <div className="flex flex-row gap-1 flex-wrap mt-1">
-                                    {p.techstacks.map((tech) => (
-                                        <div
-                                            key={tech}
-                                            className="rounded-xl bg-slate-800 text-white px-2 py-1 text-xs text-nowrap"
-                                        >
-                                            {tech}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </Link>
+                            </HoverCardContent>
+                        </HoverCard>
                     ))}
                 </div>
             </div>
