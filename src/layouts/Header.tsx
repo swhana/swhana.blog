@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { navList } from "@/config/const";
 import GithubIcon from "@/components/icons/GithubIcon";
 import ThemeBtn from "@/components/theme/ThemeBtn";
-import { Mail } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 
 export default function Header() {
     const pathname = usePathname();
@@ -40,6 +40,15 @@ export default function Header() {
                             className="fill-current hover:fill-blue-500 dark:fill-white hidden md:block"
                             width={24}
                             height={24}
+                        />
+                    </Link>
+                    <Link
+                        href="https://www.linkedin.com/in/sangwon-han"
+                        target="_blank"
+                    >
+                        <Linkedin
+                            width={24}
+                            className="stroke-current hover:stroke-blue-500 dark:fill-white hidden md:block"
                         />
                     </Link>
                 </div>
