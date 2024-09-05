@@ -7,6 +7,7 @@ import {
     getCategoryDetailList,
     getSortedPostList,
 } from "@/lib/posts";
+import CategorySelect from "./CategorySelect";
 
 interface PostListProps {
     category?: string;
@@ -19,6 +20,11 @@ const PostListPage = async ({ category }: PostListProps) => {
     return (
         <section className="mx-auto mt-24 w-full max-w-[750px] px-4">
             <CategoryList
+                categoryList={categoryList}
+                allPostCount={allPostCount}
+                currentCategory={category}
+            />
+            <CategorySelect
                 categoryList={categoryList}
                 allPostCount={allPostCount}
                 currentCategory={category}

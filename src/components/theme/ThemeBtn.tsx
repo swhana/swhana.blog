@@ -21,9 +21,10 @@ export default function ThemeBtn() {
                 onClick={() =>
                     theme === "light" ? setTheme("dark") : setTheme("light")
                 }
+                className="hidden md:block"
             />
             <Button
-                className="hover:bg-transparent"
+                className="md:hover:bg-transparent"
                 variant="ghost"
                 size="icon"
                 onClick={() =>

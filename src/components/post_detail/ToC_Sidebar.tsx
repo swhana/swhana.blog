@@ -3,9 +3,9 @@
 
 import { TableItem } from "@/config/types";
 import { cn } from "@/lib/utils";
-import { useContentObserver } from "@/utils/useContentObserver";
 import Link from "next/link";
 import { ScrollToTop } from "../button/ScrollToTop";
+import { useContentObserver } from "@/utils/useIO";
 
 interface TableProps {
     contents: TableItem[];
@@ -20,7 +20,6 @@ export default function Sidebar({ contents }: TableProps) {
         <aside className="not-prose absolute -top-[200px] left-full -mb-[100px] hidden h-[calc(100%+150px)] xl:block ">
             <div className="sticky bottom-0  top-[200px] z-10 ml-[5rem] mt-[200px] w-[200px]">
                 <div className="mb-4 border-l px-4 py-2 animate-slide-in-right-0.5">
-                    {/* <div className="mb-1 font-bold">On this page</div> */}
                     <ul className="text-sm">
                         {contents.map((content) => {
                             const isH3 = content.indent === 1;

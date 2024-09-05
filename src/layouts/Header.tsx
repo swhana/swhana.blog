@@ -30,14 +30,14 @@ export default function Header() {
                         </Link>
                     ))}
                 </div>
-                <div className="flex justify-center items-center gap-4">
+                <div className="flex items-center md:gap-4">
                     <ThemeBtn />
                     <Link href="mailto:swhan0428@gmail.com" target="_blank">
-                        <Mail className="hover:stroke-blue-500" />
+                        <Mail className="hover:stroke-blue-500 hidden md:block" />
                     </Link>
                     <Link href="https://github.com/swhana" target="_blank">
                         <GithubIcon
-                            className="fill-current hover:fill-blue-500 dark:fill-white"
+                            className="fill-current hover:fill-blue-500 dark:fill-white hidden md:block"
                             width={24}
                             height={24}
                         />

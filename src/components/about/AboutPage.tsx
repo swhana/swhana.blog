@@ -2,9 +2,8 @@
 
 import { resume } from "@/config/resume";
 import { Project } from "@/config/types";
-import { getSortedProjectList } from "@/lib/projects";
 import { cn } from "@/lib/utils";
-import { useAboutObserver } from "@/utils/useAboutObserver";
+import { useAboutObserver } from "@/utils/useIO";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,10 +16,10 @@ export default function AboutPage({ projects }: Props) {
     const contents = ["Experience", "Education", "Projects"];
 
     return (
-        <div className="md:flex md:flex-row">
+        <div className="flex flex-col">
             <div
                 id="left"
-                className="max:w-[600px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
+                className="max-w-[450px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
             >
                 <div className="text-center md:text-start">
                     <h1 className="font-bold text-4xl">{resume.name}</h1>
@@ -73,7 +72,7 @@ export default function AboutPage({ projects }: Props) {
             </div>
             <div
                 id="right"
-                className="flex flex-col justify-center w-[400px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px]"
+                className="flex flex-col justify-center max-w-[450px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px]"
             >
                 {/* <p className="text-wrap px-6">{resume.aboutme}</p> */}
                 <div id="Experience" className="scroll-mt-24" />

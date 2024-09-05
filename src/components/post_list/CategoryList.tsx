@@ -19,7 +19,7 @@ export default function CategoryList({
     currentCategory = "All",
 }: ListProps) {
     return (
-        <section className="sm:block">
+        <section className="hidden md:block">
             <div className="flex justify-between mb-10">
                 <ul className="flex gap-3">
                     <CategoryBtn
