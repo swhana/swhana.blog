@@ -29,7 +29,7 @@ const PostListPage = async ({ category }: PostListProps) => {
                 allPostCount={allPostCount}
                 currentCategory={category}
             />
-            <section>
+            <section className="max-h-[60vh] overflow-scroll">
                 <ul className="flex flex-col gap-8 lg:gap-12">
                     {postList.map((post) => (
                         <PostCard key={post.url + post.date} post={post} />
