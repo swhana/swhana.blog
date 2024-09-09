@@ -20,6 +20,21 @@ export default function AboutPage({ projects }: Props) {
     const target = useAboutObserver("h2");
     const contents = ["Experience", "Education", "Projects"];
 
+    const smoothScroll = (targetId) => {
+        const element = document.getElementById(targetId);
+        if (element && targetId === "Experience") {
+            window.scrollTo({
+                top: element.offsetTop - 96,
+                behavior: "smooth",
+            });
+        } else if (element && targetId !== "Experience") {
+            window.scrollTo({
+                top: element.offsetTop - 48,
+                behavior: "smooth",
+            });
+        }
+    };
+
     return (
         <div className="w-full flex flex-col min-w-[400px] max-w-[750px] items-center md:items-start">
             <div
@@ -45,6 +60,12 @@ export default function AboutPage({ projects }: Props) {
                                         <Link
                                             href={`#${content}`}
                                             className="flex group items-center"
+                                            onClick={(
+                                                e: React.MouseEvent<HTMLAnchorElement>,
+                                            ) => {
+                                                e.preventDefault();
+                                                smoothScroll(content);
+                                            }}
                                         >
                                             <hr
                                                 className={cn(
