@@ -11,9 +11,21 @@ import {
     parsePostAbstract,
     parseToc,
 } from "@/lib/posts";
+import { Metadata } from "next";
 
 interface PostDetailProps {
     params: { category: string; slug: string };
+}
+
+export async function generateMetadata({
+    params,
+}: PostDetailProps): Promise<Metadata> {
+    const post = await getPostDetail(params.category, params.slug);
+
+    return {
+        title: post.title,
+        description: post.description,
+    };
 }
 
 export function generateStaticParams() {

@@ -4,15 +4,20 @@
  * 실제 포스트 상세는 [slug] 하위 디렉토리로
  */
 
-import {
-    getPostPaths,
-    parsePostAbstract,
-} from "@/lib/posts";
+import { getPostPaths, parsePostAbstract } from "@/lib/posts";
 import PostListPage from "@/components/post_list/PostListPage2";
+import { Metadata } from "next";
 
 type Props = {
     params: { category: string };
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    return {
+        title: params.category.toUpperCase(),
+        description: "프론트엔드 개발자 한상원입니다.",
+    };
+}
 
 export function generateStaticParams() {
     const postPaths = getPostPaths();
@@ -30,12 +35,7 @@ export function generateStaticParams() {
 }
 
 const CategoryPage = async ({ params: { category } }: Props) => {
-
-    return (
-        <PostListPage
-            category={category}
-        />
-    );
+    return <PostListPage category={category} />;
 };
 
 export default CategoryPage;
