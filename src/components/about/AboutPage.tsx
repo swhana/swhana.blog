@@ -154,7 +154,7 @@ export default function AboutPage({ projects }: Props) {
                     </div>
                     {projects?.map((p) => (
                         <HoverCard key={p.title + p.endDate}>
-                            <HoverCardTrigger>
+                            <HoverCardTrigger asChild>
                                 <Link
                                     href={p.url}
                                     className="flex flex-row items-start mt-6 pl-4 pr-6 py-4 rounded-md hover:shadow-sm hover:bg-cyan-100/50 group"
