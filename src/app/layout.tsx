@@ -8,6 +8,9 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 export const metadata: Metadata = {
     title: "swhana | FE Engineer",
     description: "프론트엔드 개발자 한상원입니다.",
+    icons: {
+        icon: "/assets/favicon.ico",
+    },
 };
 
 export default function RootLayout({
