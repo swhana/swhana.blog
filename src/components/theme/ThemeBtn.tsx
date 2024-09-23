@@ -22,6 +22,7 @@ export default function ThemeBtn() {
                     theme === "light" ? setTheme("dark") : setTheme("light")
                 }
                 className="hidden md:block"
+                aria-label="Switch Theme"
             />
             <Button
                 className="md:hover:bg-transparent"
