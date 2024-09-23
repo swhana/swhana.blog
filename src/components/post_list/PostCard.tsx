@@ -13,7 +13,7 @@ export default function PostCard({ post }: PostCardProps) {
 
     return (
         <Link href={post.url}>
-            <li className="w-full flex flex-row justify-between gap-2 overflow-hidden rounded-md transition group max-h-[120px] sm:max-h-[100px]">
+            <div className="w-full flex flex-row justify-between gap-2 overflow-hidden rounded-md transition group max-h-[120px] sm:max-h-[100px]">
                 <div className="max-w-[500px]">
                     <p className="text-lg font-semibold mt-2 group-hover:text-blue-500">
                         {post.title}
@@ -38,7 +38,7 @@ export default function PostCard({ post }: PostCardProps) {
                         }}
                     />
                 )}
-            </li>
+            </div>
         </Link>
     );
 }

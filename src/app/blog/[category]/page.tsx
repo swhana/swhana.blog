@@ -4,8 +4,8 @@
  * 실제 포스트 상세는 [slug] 하위 디렉토리로
  */
 
+import PostListPage from "@/components/post_list/PostListPage";
 import { getPostPaths, parsePostAbstract } from "@/lib/posts";
-import PostListPage from "@/components/post_list/PostListPage2";
 import { Metadata } from "next";
 
 type Props = {

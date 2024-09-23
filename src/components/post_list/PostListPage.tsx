@@ -2,31 +2,39 @@
 
 import CategoryList from "@/components/post_list/CategoryList";
 import PostCard from "@/components/post_list/PostCard";
+import {
+    getAllPostCount,
+    getCategoryDetailList,
+    getSortedPostList,
+} from "@/lib/posts";
+import CategorySelect from "./CategorySelect";
 
 interface PostListProps {
     category?: string;
-    postList;
-    categoryList;
-    allPostCount;
 }
 
-const PostListPage = async ({
-    category,
-    postList,
-    categoryList,
-    allPostCount,
-}: PostListProps) => {
+const PostListPage = async ({ category }: PostListProps) => {
+    const postList = await getSortedPostList(category);
+    const categoryList = getCategoryDetailList();
+    const allPostCount = await getAllPostCount();
     return (
-        <section className="mx-auto mt-[72px] w-full max-w-[750px] px-4">
+        <section className="mx-auto mt-24 w-full max-w-[750px] px-4">
             <CategoryList
                 categoryList={categoryList}
                 allPostCount={allPostCount}
                 currentCategory={category}
             />
-            <section>
+            <CategorySelect
+                categoryList={categoryList}
+                allPostCount={allPostCount}
+                currentCategory={category}
+            />
+            <section className="max-h-[60vh] overflow-scroll">
                 <ul className="flex flex-col gap-8 lg:gap-12">
                     {postList.map((post) => (
-                        <PostCard key={post.url + post.date} post={post} />
+                        <li key={post.url + post.date}>
+                            <PostCard post={post} />
+                        </li>
                     ))}
                 </ul>
             </section>
