@@ -27,6 +27,7 @@ export default function ThemeBtn() {
                 className="md:hover:bg-transparent"
                 variant="ghost"
                 size="icon"
+                aria-label="Theme"
                 onClick={() =>
                     theme === "light" ? setTheme("dark") : setTheme("light")
                 }

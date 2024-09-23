@@ -49,4 +49,4 @@ Post: 블로그에 포스팅
 
 ## File Structure
 
-![디렉토리 구조](/blog/posts/nextjs/test/imgs/1.png)
+![디렉토리 구조](/public/blog/posts/nextjs/test/imgs/1.png)

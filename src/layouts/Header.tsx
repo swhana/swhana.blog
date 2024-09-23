@@ -32,10 +32,18 @@ export default function Header() {
                 </div>
                 <div className="flex items-center md:gap-4">
                     <ThemeBtn />
-                    <Link href="mailto:swhan0428@gmail.com" target="_blank">
+                    <Link
+                        href="mailto:swhan0428@gmail.com"
+                        target="_blank"
+                        aria-label="Mailto"
+                    >
                         <Mail className="hover:stroke-blue-500 hidden md:block" />
                     </Link>
-                    <Link href="https://github.com/swhana" target="_blank">
+                    <Link
+                        href="https://github.com/swhana"
+                        target="_blank"
+                        aria-label="Github"
+                    >
                         <GithubIcon
                             className="fill-current hover:fill-blue-500 dark:fill-white hidden md:block"
                             width={24}
@@ -45,6 +53,7 @@ export default function Header() {
                     <Link
                         href="https://www.linkedin.com/in/sangwon-han"
                         target="_blank"
+                        aria-label="Linkedin"
                     >
                         <Linkedin
                             width={24}
