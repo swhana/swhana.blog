@@ -36,7 +36,7 @@ export default function AboutPage({ projects }: Props) {
     };
 
     return (
-        <div className="w-full flex flex-col min-w-[400px] max-w-[750px] items-center md:items-start">
+        <div className="w-full max-w-[750px] items-center md:items-start">
             <div
                 id="left"
                 className="max-w-[400px] md:w-[250px] pr-4 md:block md:fixed flex flex-row"
