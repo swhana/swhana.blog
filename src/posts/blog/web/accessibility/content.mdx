@@ -1,0 +1,127 @@
+---
+title: "블로그 웹 접근성 개선하기"
+date: 2024-09-28
+description: 웹 접근성 점수 끌어올리기
+thumbnail: /blog/posts/web/accessibility/imgs/1.png
+---
+
+문득 내 블로그는 몇 점짜리 블로그일까 궁금해졌다. 성능 측정을 위해 [PageSpeed Insights](https://pagespeed.web.dev/?hl=ko) 에서 측정해보았다. Lighthouse를 통해서도 측정해보았다.
+
+![접근성 점수가 부족하다](/blog/posts/web/accessibility/imgs/1.png)
+
+개선 방법은 해당 진단 도구에 다 쓰여있었다. 개선해나가면서 알게 된 부분을 정리하고 공유하고자 한다.
+
+## Aria-Label 사용하기
+button 요소의 접근자는 `<button>`과 `</button>` 사이의 콘텐츠, image 요소의 접근자는 alt 속성값, form input 요소의 접근자는 연결된 `<label>` 요소의 콘텐츠로 정해진다.
+나의 경우 image 요소의 alt 속성값은 잘 채워넣고 있었고, form input 요소는 사용하지 않았기에 문제되지 않았지만, button 요소의 접근자가 없던 것이 문제였다.
+
+```tsx
+    //ThemeBtn.tsx
+    <Switch
+        checked={theme !== "light"}
+        onClick={() =>
+            theme === "light" ? setTheme("dark") : setTheme("light")
+        }
+        className="hidden md:block"
+    />
+    <Button
+        className="md:hover:bg-transparent"
+        variant="ghost"
+        size="icon"
+        onClick={() =>
+            theme === "light" ? setTheme("dark") : setTheme("light")
+        }
+    >
+        {theme === "light" ? <Sun /> : <Moon />}
+    </Button>
+```
+Shadcn-UI의 Switch, Button 컴포넌트는 기본적으로 button 요소이기 때문에 위와 같이 작성하면 button 요소의 접근자로 인식할 콘텐츠가 없다. 때문에 스크린 리더 등의 보조 기술의 접근성이 떨어지게 된다.
+
+```tsx {8, 17}
+    //ThemeBtn.tsx
+    <Switch
+        checked={theme !== "light"}
+        onClick={() =>
+            theme === "light" ? setTheme("dark") : setTheme("light")
+        }
+        className="hidden md:block"
+        aria-label="Switch Theme"
+    />
+    <Button
+        className="md:hover:bg-transparent"
+        variant="ghost"
+        size="icon"
+        onClick={() =>
+            theme === "light" ? setTheme("dark") : setTheme("light")
+        }
+        aria-label="Theme"
+    >
+        {theme === "light" ? <Sun /> : <Moon />}
+    </Button>
+```
+
+접근성 개선을 위해 마크업에 추가 시맨틱을 구현하게 도와주는 [WAI-ARIA(Web Accessibility Initiative - Accessible Rich Internet Applications)](https://www.w3.org/TR/wai-aria-1.1/)가 제시되었다. WAI-ARIA의 스펙 중 하나인 aria-label 속성을 추가해주면 접근자로 대체할 이름을 추가해줄 수 있다.
+
+
+
+
+## ul 태그 안에 li 태그 사용하기
+당연한 소리를 하는거라고 생각하실 수도 있지만...
+
+```tsx
+    //PostList.tsx
+    <ul className="flex flex-col gap-8 lg:gap-12">
+        {postList.map((post) => (
+            <PostCard post={post} />
+        ))}
+    </ul>  
+```
+
+```tsx
+    //PostCard.tsx
+    <Link href={post.url}>
+        <li>
+            {...}
+        </li>
+    </Link>
+```
+
+나는 그동안 이런 식으로 코드를 작성했던 적이 많았다. 그러나 이렇게 작성하면
+
+![올바르지 못한 태그 사용](/blog/posts/web/accessibility/imgs/2.png)
+
+다음과 같이 ul 태그의 직접적인 자식 태그가 a 태그가 되고, 이는 HTML 표준에 어긋나 스크린 리더 등의 보조 기술이 콘텐츠를 해석할 때 문제가 생길 수 있다.
+
+올바른 태그 사용법은 다음과 같다.
+```tsx {4, 6}
+    //PostList.tsx
+    <ul className="flex flex-col gap-8 lg:gap-12">
+        {postList.map((post) => (
+            <li key={post.url + post.date}>
+                <PostCard post={post} />
+            </li>
+        ))}
+    </ul>  
+```
+
+```tsx
+    //PostCard.tsx
+    <Link href={post.url}>{...}</Link>
+```
+
+![올바른 태그 사용](/blog/posts/web/accessibility/imgs/3.png)
+겉으로 보기에는 아무 차이가 없지만, 사람이 아닌 기계의 웹 접근성에 영향을 줄 수 있는 요소이기 때문에 올바른 태그를 사용하는 습관을 들이도록 해야겠다.
+
+
+
+
+
+![개선된 웹 접근성 점수](/blog/posts/web/accessibility/imgs/4.png)
+
+위 사항들을 개선하는 것으로 웹 접근성 점수는 77점에서 96점까지 끌어올릴 수 있었다. 남은 4점은 배경색과 텍스트 색의 대비가 부족하다는 내용이었지만, 블로그 제작 시 의도된 부분이었기에 넘어가기로 했다.
+
+
+
+## 참고 자료
+https://developer.mozilla.org/ko/docs/Web/Accessibility/ARIA/Attributes/aria-label
+https://developer.mozilla.org/ko/docs/Learn/Accessibility/HTML
