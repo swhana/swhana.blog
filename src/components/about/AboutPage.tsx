@@ -11,6 +11,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "../ui/hover-card";
+import { useRef } from "react";
 
 type Props = {
     projects: Project[];
@@ -19,17 +20,16 @@ type Props = {
 export default function AboutPage({ projects }: Props) {
     const target = useAboutObserver("h2");
     const contents = ["Experience", "Education", "Projects"];
+    const experienceRef = useRef<HTMLDivElement>(null);
+    const educationRef = useRef<HTMLDivElement>(null);
+    const projectsRef = useRef<HTMLDivElement>(null);
 
-    const smoothScroll = (targetId) => {
-        const element = document.getElementById(targetId);
-        if (element && targetId === "Experience") {
+    const smoothScroll = (targetRef: React.RefObject<HTMLDivElement>) => {
+        if (targetRef && targetRef.current) {
+            const offsetTop = targetRef === experienceRef ? 96 : 48;
+
             window.scrollTo({
-                top: element.offsetTop - 96,
-                behavior: "smooth",
-            });
-        } else if (element && targetId !== "Experience") {
-            window.scrollTo({
-                top: element.offsetTop - 48,
+                top: targetRef.current.offsetTop - offsetTop,
                 behavior: "smooth",
             });
         }
@@ -64,7 +64,14 @@ export default function AboutPage({ projects }: Props) {
                                                 e: React.MouseEvent<HTMLAnchorElement>,
                                             ) => {
                                                 e.preventDefault();
-                                                smoothScroll(content);
+                                                smoothScroll(
+                                                    content === "Experience"
+                                                        ? experienceRef
+                                                        : content ===
+                                                            "Education"
+                                                          ? educationRef
+                                                          : projectsRef,
+                                                );
                                             }}
                                         >
                                             <hr
@@ -77,7 +84,7 @@ export default function AboutPage({ projects }: Props) {
 
                                             <span
                                                 className={cn(
-                                                    "text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200 group-hover:text-blue-500",
+                                                    "text-xs font-bold uppercase tracking-widest text-slate-500 group-focus-visible:text-slate-200 group-hover:text-blue-500",
                                                     isIntersecting &&
                                                         "text-blue-500",
                                                 )}
@@ -96,7 +103,11 @@ export default function AboutPage({ projects }: Props) {
                 id="right"
                 className="flex flex-col justify-center max-w-[450px] mt-12 md:mt-0 md:w-[480px] md:ml-[250px] px-4 md:px-0"
             >
-                <div id="Experience" className="scroll-mt-24" />
+                <div
+                    id="Experience"
+                    className="scroll-mt-24"
+                    ref={experienceRef}
+                />
                 <div>
                     <h2 className="font-bold text-2xl px-6">Experience</h2>
                     {resume.experience?.map((exp) => (
@@ -119,7 +130,11 @@ export default function AboutPage({ projects }: Props) {
                         </Link>
                     ))}
                 </div>
-                <div id="Education" className="scroll-mt-12" />
+                <div
+                    id="Education"
+                    className="scroll-mt-12"
+                    ref={educationRef}
+                />
                 <div className="mt-12">
                     <h2 className="font-bold text-2xl px-6">Education</h2>
                     {resume.education?.map((edu) => (
@@ -142,7 +157,7 @@ export default function AboutPage({ projects }: Props) {
                         </Link>
                     ))}
                 </div>
-                <div id="Projects" className="scroll-mt-12" />
+                <div id="Projects" className="scroll-mt-12" ref={projectsRef} />
                 <div className="mt-12">
                     <div className="flex flex-row justify-between items-center px-6">
                         <h2 className="font-bold text-2xl">Projects</h2>
