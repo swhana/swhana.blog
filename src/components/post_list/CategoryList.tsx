@@ -21,7 +21,7 @@ export default function CategoryList({
     return (
         <section className="hidden md:block">
             <div className="flex justify-between mb-10">
-                <ul className="flex gap-3">
+                <ul className="flex gap-3 flex-wrap">
                     <CategoryBtn
                         name="All"
                         href="/blog"

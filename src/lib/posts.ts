@@ -114,13 +114,18 @@ export const getCategoryDetailList = () => {
             result[category] = 1;
         }
     }
-    const detailList: CategoryDetail[] = Object.entries(result).map(
-        ([category, count]) => ({
+    const detailList: CategoryDetail[] = Object.entries(result)
+        .map(([category, count]) => ({
             dirName: category,
             publicName: getCategoryName(category),
             count,
-        }),
-    );
+        }))
+        .sort((a, b) => {
+            //글 개수 순 정렬 후 개수가 같으면 카테고리 이름 순 정렬
+            if (a.count > b.count) return -1;
+            else if (a.count < b.count) return 1;
+            else return a.dirName.localeCompare(b.dirName);
+        });
 
     return detailList;
 };
