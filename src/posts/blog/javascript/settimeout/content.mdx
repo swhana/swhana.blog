@@ -1,0 +1,88 @@
+---
+title: "setTimeout은 Promise를 반환하지 않는다"
+date: 2024-10-08
+description: 올바르게 setTimeout을 async/await과 함께 사용하는 방법
+thumbnail: /blog/posts/javascript/settimeout/imgs/1.png
+---
+
+Javascript에 대해 처음 배울 때, `setTimeout`, `setInterval`은 비동기 함수다. await 키워드는 비동기 함수 앞에 붙인다. 막연하게 이렇게 배웠던 것 같다.
+
+오래 전에 써놓은 Promise.js의 코드를 보며 실행 순서를 머릿 속으로 그려보면서 내 지식을 점검하던 차였다.
+
+```js
+async function foo() {
+    console.log(1);
+    await setTimeout(() => console.log(2), 10);
+    console.log(3);
+}
+
+function bar() {
+    console.log(4);
+    setTimeout(() => console.log(5), 100);
+    console.log(6);
+}
+
+async function main() {
+    console.log(7);
+    await setTimeout(foo, 0);
+    console.log(8);
+    await setTimeout(bar, 0);
+}
+
+main();
+```
+
+위 코드의 실행 순서를 정리하면 다음과 같다. 추가로 설명하려면 Javascript 엔진의 실행원리에 대한 설명이 필요하니 지금은 패스.
+
+1. main 함수를 호출해서 Call Stack에 올린다
+2. 호출된 main함수부터 실행. "7" 출력
+3. `setTimeout(foo, 0)`가 Task queue에 등록
+4. "8" 출력
+5. `setTimeout(bar, 0)`가 Task queue에 등록, Task queue = `{ foo, bar }`
+6. main 함수 실행이 끝났음. 이제 queue에서 stack으로 가져올 작업을 확인. foo부터 가져옴
+7. foo에서 "1" 출력
+8. `setTimeout(() => console.log(2), 10)`이 Task queue로 이동, Task queue = `{ bar, setTimeout(() => console.log(2), 10)}`
+9. "3" 출력 후 foo가 stack에서 제거, bar를 가져옴
+10. "4" 출력, Task queue에 setTimeout 등록, Task queue = `{setTimeout(() => console.log(2), 10), setTimeout(() => console.log(5), 100)}`
+11. "6" 출력, bar 함수 실행이 끝났으므로 stack에서 제거
+12. Task queue에서 순차적으로 setTimeout의 콜백함수 실행, 10ms 후 "2" 출력, 100ms 후 "5" 출력
+예상결과: 7 => 8 => 1 => 3 => 4 => 6 => 2 => 5
+
+문득 코드를 보다가 await setTimeout과 그냥 setTimeout에 무슨 차이가 있나 하는 생각이 들었다. 저 코드를 작성할 당시에는 무작정 비동기 함수 = Promise라고 믿고 작성했었나 보다.
+setTimeout의 반환값은 그저 timer를 식별해 나중에 clearTimeout에 사용하기 위한 timeoutID로, await 키워드를 붙여도 아무 의미가 없다. async/await 키워드와 함께 사용하고자 한다면 Promise 객체를 생성해줘야 한다.
+
+```js
+async function foo() {
+  console.log(1);
+}
+
+async function main() {
+  console.log(7);
+  await new Promise((resolve, _) =>
+    setTimeout(() => {
+      foo();
+      resolve();
+    }, 0)
+  );
+  console.log(8);
+}
+
+main();
+```
+
+이런 식으로 하면 실행 순서가 어떻게 될까? 실행 순서 내용이 중복될 수 있으니 코드를 일부 간소화했다.
+
+1. main 함수를 호출해서 Call Stack에 올린다
+2. 호출된 main함수부터 실행. "7" 출력
+3. `Promise((resolve, _) =>
+    setTimeout(() => {
+      foo();
+      resolve();
+    }, 0)
+  );`가 Micro task queue에 등록(Task queue보다 우선처리). Promise가 resolve될 때까지 main 함수의 실행을 멈춤.
+4. foo 함수 실행, "1" 출력.
+5. 다시 main 함수로 돌아와서 "8" 출력.
+
+의도한 대로 Timer가 기능하는 것을 알 수 있다. setTimeout을 async/await과 함께 사용하려면 Promise로 감싸주어야 한다는 점을 기억해야 할 듯 하다.
+
+
