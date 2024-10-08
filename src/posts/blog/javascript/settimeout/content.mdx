@@ -41,9 +41,9 @@ main();
 5. `setTimeout(bar, 0)`가 Task queue에 등록, Task queue = `{ foo, bar }`
 6. main 함수 실행이 끝났음. 이제 queue에서 stack으로 가져올 작업을 확인. foo부터 가져옴
 7. foo에서 "1" 출력
-8. `setTimeout(() => console.log(2), 10)`이 Task queue로 이동, Task queue = `{ bar, setTimeout(() => console.log(2), 10)}`
+8. `setTimeout(() => console.log(2), 10)`이 Web API에서 처리되어 10ms 뒤에 Task queue로 이동, Task queue = `{ bar, () => console.log(2)}`
 9. "3" 출력 후 foo가 stack에서 제거, bar를 가져옴
-10. "4" 출력, Task queue에 setTimeout 등록, Task queue = `{setTimeout(() => console.log(2), 10), setTimeout(() => console.log(5), 100)}`
+10. "4" 출력, Web API가 setTimeout 처리, 100ms 후에 콜백 함수가 Task queue로 이동, Task queue = `{() => console.log(2), () => console.log(5)}`
 11. "6" 출력, bar 함수 실행이 끝났으므로 stack에서 제거
 12. Task queue에서 순차적으로 setTimeout의 콜백함수 실행, 10ms 후 "2" 출력, 100ms 후 "5" 출력
 예상결과: 7 => 8 => 1 => 3 => 4 => 6 => 2 => 5
@@ -59,12 +59,12 @@ async function foo() {
 
 async function main() {
   console.log(7);
-  await new Promise((resolve, _) =>
+  await new Promise((resolve, _) => {
     setTimeout(() => {
       foo();
-      resolve();
-    }, 0)
-  );
+      return resolve();
+    }, 0);
+  });
   console.log(8);
 }
 
@@ -75,16 +75,15 @@ main();
 
 1. main 함수를 호출해서 Call Stack에 올린다
 2. 호출된 main함수부터 실행. "7" 출력
-3. `Promise((resolve, _) =>
+3. `Promise((resolve, _) => {
     setTimeout(() => {
       foo();
-      resolve();
-    }, 0)
-  );`가 Micro task queue에 등록(Task queue보다 우선처리). Promise가 resolve될 때까지 main 함수의 실행을 멈춤.
-4. 실행이 멈춘 나머지 main 함수(위 코드에서는 console.log(8))은 Micro task queue에 등록. Call stack이 비게 되므로 Micro task queue의 foo 함수부터 가져옴.
-5. foo 함수 실행, "1" 출력.
-6. 다시 main 함수로 돌아와서 "8" 출력.
+      return resolve();
+    }, 0);
+  });`에서 Promise가 resolve 될 때까지 main 함수가 Micro task queue에 등록.
+4. Promise 내부의 setTimeout이 Web API로 보내져 처리된 후 Task queue에 등록. foo가 호출된 후에야 Promise가 resolve되므로 "1" 출력 후에 "8" 출력.  
 
-의도한 대로 Timer가 기능하는 것을 알 수 있다. setTimeout을 async/await과 함께 사용하려면 Promise로 감싸주어야 한다는 점을 기억해야 할 듯 하다.
+
+의도한 대로 Timer가 기능하는 것을 알 수 있다. 단 resolve가 setTimeout 밖에 있거나 하면 setTimeout이 비동기로 처리되는 사이에 Promise가 resolve되어 순서가 바뀔 수 있음에 유의해야 한다.
 
 
