@@ -1,0 +1,100 @@
+---
+title: "Context와 Zustand 결합하기"
+date: 2024-10-24
+description: Context와 Zustand를 통한 전역 상태 관리의 장단점과 상충안에 대해
+thumbnail: 
+---
+
+## Context
+Context는 Provider 패턴을 사용해 데이터 흐름을 제어하는 방법 중 하나이다.
+Context는 기본적으로 Context.Provider와 Context.Consumer를 제공하며 Context.Provider로 감싼 컴포넌트들 중에서 Context.Consumer로 감싼 컴포넌트가 있다면 Context안에 저장한 객체를 참조할 수 있도록 설계된 것이 시초이다.
+
+```ts
+const SomeContext = createContext<T: SomeConextType>(null);
+
+return (
+	<SomeContext.Provider>
+		{children}
+	</SomeContext.Provider>
+)
+```
+이런 느낌으로 작성할 수 있다.
+현재는 Context.Consumer는 useContext(SomeContext)로 대체되었다. deprecated된건 아니고 아직 사용은 가능하다.
+
+Provider로 감싸진 컴포넌트 중 하나에서 useContext(SomeContext)를 호출하면 SomeContext를 불러올 수 있다. 이때 SomeContext에 저장되는 값은 가장 가까이 있는 SomeContext.Provider의 value 속성값, 없으면 createContext의 defaultValue로 정해진다.
+
+Context를 사용하면 props를 통해 데이터를 전달하지 않아도 되어 해당 데이터와 관련없는 컴포넌트의 렌더링을 피할 수 있다는 장점이 있다. 컴포넌트 트리의 depth가 깊어짐에 따라 생길 수 있는 props drilling과 같은 문제를 피할 수 있다는 뜻이기도 하다.
+
+Context의 단점이라면 Context가 여러 필드의 집합 객체로 이루어져 있다면, useContext를 통해 참조하는 필드가 업데이트 되지 않고 다른 필드가 업데이트되어 **Context 자체가 바뀌게 된다면 모든 useContext를 사용하는 컴포넌트가 리렌더링된다는 점**이다. 
+
+## Zustand를 통한 전역 스토어 관리
+```ts
+import { createStore } from 'zustand';
+
+const initialStore = (prevState) => {
+	return createStore({
+		...initialState, ...prevState
+	})
+}
+
+//이런 식으로 박아버리면 전역 스토어가 하나 생성되어 애플리케이션 전체에서 참조할 수 있게 된다.
+const rootStore = createStore({ initialState: 0 });
+
+```
+간단하게 이런 식으로 전역 스토어 인스턴스를 만들 수 있다.
+
+전역 스토어의 장점은 어디서든 참조할 수 있다는 점이다. 단점이라면 이제 전역 스토어에 저장하는 데이터의 흐름을 읽기가 힘들어진다는 점?
+어디서든 스토어를 참조할 수 있고 어디서든 스토어에 업데이트를 할 수 있기 때문에 사실상 데이터의 방향성이 사라진다고 봐도 될 듯하다. props로 구현하게 된다면 어느 부모 컴포넌트에서 어떤 자식 컴포넌트로 데이터가 주입되는지 명확하게 파악할 수 있다.
+또한 전역 스토어로부터 데이터(props)를 주입받아 생성되는 컴포넌트의 경우 **항상 같은 전역 상태를 공유하기 때문에 재사용이 불가능**하다.
+
+예를 들어 전역 스토어에서 username을 받아서 생성되는 컴포넌트(nameTagComponent..?)가 있다고 해보자. 이 컴포넌트를 재사용해서 여러개 복사하려고 해도 전부 같은 username만을 표시하게 될테니 의미가 없다.
+
+때로는 데이터를 격리해야하는 것도 필요한 법이다. 물론 Component 내부의 로컬 변수에 저장하면 되는것 아닌가 하겠지만, 그 Component가 다시 여러 컴포넌트의 조합으로 나누어진다면? 그리고 그 컴포넌트들이 같은 상태를 공유해야 한다면?
+
+이러한 고민에서 나온 것 중 하나가 Context와 Zustand의 결합이다.
+Context의 Provider를 통해 묶인 컴포넌트들이 하나의 자체적인 Context를 공유한다는 점.
+그리고 Zustand와 같은 전역 상태 라이브러리의 내장 함수인 selector를 통해 원하는 컴포넌트만 정확하게 리렌더링할 수 있다는 점.
+
+이 두가지 장점을 결합하고 단점을 상쇄해 자체적인 전역 상태를 공유할 수 있는 재사용 가능한 컴포넌트를 만들 수 있게 된다.
+
+```ts
+// RecyclableComponent.tsx
+import { createContext } from 'react';
+import { createStore } from 'zustand';
+
+const MyContext = createContext<T: MyContextType>(null); //컴포넌트가 참조할 컨텍스트 생성
+const CustomProvider = ({ children }) => {
+	const myRef = useRef(null);
+
+	if(!myRef.current) myRef.current = createStore({ initialState: 0 });
+	
+	return (
+		<MyContext.Provider value={myRef.current}>
+			{children}
+		</MyContext.Provider>
+	)
+}
+
+//사용 예시
+<CustomProvider>{children}</CustomProvider>
+
+
+// ChildrenOfRecyclableComponent.tsx
+import { useStore } from 'zustand';
+
+const ChildComponent = () => {
+	const store = useContext(MyContext);
+	if(!store) throw new Error('Missing Provider');
+	return useStore(store, selector);
+}
+
+```
+
+여기서 useRef 혹은 useState에서 setState를 제거한 다음에 store 인스턴스를 저장하면 싱글톤 패턴을 통해 하나의 store 인스턴스를 재활용할 수 있는데, 이에 대해선 추후에 좀더 자세히 다루도록 하겠다.
+이런 식으로 코드를 설계하고 사용하게 되면 Provider로 스토어를 분리해서 사용할 수 있고 재사용 가능한 컴포넌트를 설계하기 쉬워진다.
+
+
+## 참고자료
+https://velog.io/@ojj1123/zustand-and-react-context
+https://zustand.docs.pmnd.rs/previous-versions/zustand-v3-create-context
+https://ko.react.dev/learn/referencing-values-with-refs
