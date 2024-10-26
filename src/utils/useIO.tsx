@@ -26,7 +26,7 @@ export const useAboutObserver = (query: string) => {
             });
         };
         const scrollMarginOption = {
-            rootMargin: "-48px 0px -70% 0px",
+            rootMargin: "-48px 0px -75% 0px",
         };
 
         //ref에 옵저버 등록
