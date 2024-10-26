@@ -35,14 +35,20 @@ export const resume: Resume = {
         "다른 사람과의 개발 경험을 누구보다 중요하게 여기는 개발자입니다. 읽기 좋은 코드를 작성하기 위한 코드 모듈화에 관심이 많으며, 아는 지식을 다른 사람과 공유하는 것을 좋아합니다. 혼자가 아닌 같이 성장하는 개발을 하고 싶습니다.",
     experience: [
         {
-            title: "삼성 청년 SW 아카데미",
-            link: "https://www.ssafy.com/",
-            description:
-                "삼성 청년 SW 아카데미에서 6개월간 알고리즘, Java, Javascript, Vue.js 등 SW 역량 향상 교육을 받았으며, 3번의 팀 프로젝트를 통해 협업 능력과 애자일 프로세스 경험을 키웠습니다.",
-            duration: "2022 - 2023",
+            title: "넛지 헬스케어",
+            link: "https://cashwalk.com/",
+            description: "Frontend Engineer Intern",
+            duration: "2024 - 현재",
         },
     ],
     education: [
+        {
+            title: "삼성 청년 SW 아카데미",
+            link: "https://www.ssafy.com/",
+            description:
+                "삼성 청년 SW 아카데미에서 6개월간 알고리즘, Java, Javascript, Vue.js 등 SW 역량 향상 교육을 받았으며, 팀 프로젝트를 통해 협업 능력과 애자일 프로세스 경험을 키웠습니다.",
+            duration: "2022 - 2023",
+        },
         {
             title: "Nagoya Institute of Technology",
             link: "https://www.nitech.ac.jp/eng/",
