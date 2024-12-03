@@ -11,7 +11,7 @@ export const useAboutObserver = (query: string) => {
     useEffect(() => {
         const handleObserver: IntersectionObserverCallback = (entries) => {
             entries.forEach((entry) => {
-                const targetId = entry.target.innerHTML;
+                const targetId = `#${entry.target.id}`;
 
                 //관찰중인 요소가 뷰포트에 진입했을 때
                 if (entry.isIntersecting) {
@@ -26,7 +26,8 @@ export const useAboutObserver = (query: string) => {
             });
         };
         const scrollMarginOption = {
-            rootMargin: "-48px 0px -75% 0px",
+            // rootMargin: "-48px 0px -75% 0px",
+            threshold: 1,
         };
 
         //ref에 옵저버 등록
@@ -57,8 +58,11 @@ export const useContentObserver = (query: string) => {
 
                 //관찰중인 요소가 뷰포트에 진입했을 때
                 if (entry.isIntersecting) {
-                    setTargetList(() => [targetId]);
+                    setTargetList([...targetList, targetId]);
+
+                    console.log(targetList);
                 }
+
                 //관찰중인 요소가 뷰포트에서 벗어났을 때
                 else {
                     setTargetList((prev) => {
@@ -68,7 +72,7 @@ export const useContentObserver = (query: string) => {
             });
         };
         const scrollMarginOption = {
-            rootMargin: "-48px 0px -60% 0px",
+            // rootMargin: "-48px 0px -60% 0px",
             threshold: 1,
         };
 

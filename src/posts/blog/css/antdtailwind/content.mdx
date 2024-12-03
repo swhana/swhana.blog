@@ -1,0 +1,54 @@
+---
+title: "Ant Design과 Tailwindcss 같이 사용하기"
+date: 2024-12-03
+description: Ant Design과 Tailwindcss 같이 사용하기
+thumbnail: 
+---
+
+Ant Design과 Tailwindcss를 같이 사용하다보면 스타일링에 있어 문제를 겪을 때가 있습니다.
+
+```tsx
+const StyledWrapper = styled.div`
+	.ant-menu-item {
+		margin-bottom: 0;
+	}
+`
+```
+
+기존에 styled-components와 사용할 때는 다음과 같이 직접적으로 ant design 컴포넌트 요소에 접근할 수 있었지만, tailwindcss에서는 Ant Design 컴포넌트의 className에 css 태그를 추가해도 잘 적용되지 않습니다.
+
+```tsx
+<Menu
+  openKeys={openedKeys}
+  selectedKeys={selectedKeys}
+  theme="light"
+  mode="inline"
+  inlineIndent={22}
+  onClick={onClick}
+  onOpenChange={onOpenChange}
+  items={rootMenu}
+  className="bg-white text-black" // X
+/>
+```
+
+여러 방법을 찾아보았고 실험도 해보았으나, styled-components를 사용할 때처럼 직접 .ant-menu-item과 같이 요소에 접근해 스타일링할 수 있었던 방법은 다음과 같습니다.
+
+```tsx
+//globals.css
+@layer antd {
+  .ant-menu-item {
+    @apply mt-0 mb-0 !important;
+  }
+  .ant-menu-item-selected {
+    @apply bg-fafafa text-black font-bold !important;
+  }
+  .ant-menu-submenu-title {
+    @apply text-black font-bold !important;
+  }
+}
+
+```
+
+tailwindcss의 globals.css에 커스텀 레이어를 추가해주면 잘 적용됩니다. 주의할 점은 !important를 사용해야 강제로 antd의 css를 덮어씌울 수 있다는 점입니다. 
+
+!important를 사용해야하는 상황이 최선이라고 생각하지는 않기 때문에 좀더 좋은 방법이 있으면 추가로 공유하겠습니다.
